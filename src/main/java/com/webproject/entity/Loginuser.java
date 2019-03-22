@@ -30,7 +30,17 @@ public class Loginuser {
     /** 用户类型 0-超级用户 1-管理员 2-普通用户*/
     private Integer type;
 
-    public String getUserid() {
+    private String newword;
+    
+    public String getNewword() {
+		return newword;
+	}
+
+	public void setNewword(String newword) {
+		this.newword = newword;
+	}
+
+	public String getUserid() {
         return userid;
     }
 

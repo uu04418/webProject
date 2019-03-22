@@ -25,6 +25,11 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
+	<error-page>
+		<error-code>404 ,405</error-code>
+		<location>/admin/login.html</location>
+	</error-page>
 
 	
 

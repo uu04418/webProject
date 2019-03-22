@@ -16,5 +16,8 @@ public interface UserCustomerMapper {
 			 @Param("pagequery")	PageQuery pagequery);
 	
 	int SearchFinandetailCount(@Param("search") FinandetailCustomer search );
+
+	Loginuser checkUser(@Param("userid")String userid,
+			@Param("username")String username, @Param("telephone") String telephone);
     
 }

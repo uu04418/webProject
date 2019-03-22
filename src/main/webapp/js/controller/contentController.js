@@ -1,5 +1,6 @@
  //控制层 
-app.controller('contentController' ,function($scope,$controller,contentService ,financialService){	
+app.controller('contentController' ,function($scope,$controller,contentService ,financialService
+		,loginService){	
 	
 	
 	$scope.typestatus = ['未知','收入','支出'];
@@ -61,6 +62,21 @@ app.controller('contentController' ,function($scope,$controller,contentService ,
 			}		
 		);				
 	}
+	
+	 //读取列表数据绑定到表单中  
+	$scope.loginName=function(){
+		loginService.loginName().success(
+			function(response){
+				if (response.success) {
+					$scope.loginUser= response.data;
+				}else {
+					alert(response.message);
+					window.location.href='login.html';
+				}
+				
+			}			
+		);
+	}   
 	
 	
     

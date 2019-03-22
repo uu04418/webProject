@@ -41,5 +41,12 @@
 				</if>
 			</if>
 	  </select>
+	  
+	  
+	   <select id="checkUser" resultType="com.webproject.entity.Loginuser">
+	  		SELECT * from loginuser where 
+			userid != #{userid}
+			and ( username = #{username} or telephone = #{telephone} )  
+	  </select>
   
 </mapper>

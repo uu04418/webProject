@@ -12,6 +12,29 @@ app.service('loginService',function($http){
 		return $http.get('/webProject/login' ,entity);		
 	}
 	
+	//上传文件
+	this.uploadFile=function(){
+		var formdata=new FormData();
+		//var file = document.getElementById("file");
+		formdata.append('file',file.files[0]);//file 文件上传框的name
+		
+		return $http({
+			url:'/webProject/uploadFile',		
+			method:'post',
+			data:formdata,
+			headers:{ 'Content-Type':undefined },
+			transformRequest: angular.identity			
+		});
+		
+	}
+	
+	//显示登录用户名称
+	this.updateUser=function(entity){
+		return $http.post('/webProject/updateUser' ,entity);		
+	}
+	
+	
+	
 	//显示登录用户名称
 	this.toPage=function(attr){
 		//return $http.get('/webProject/showPage/' + attr);		

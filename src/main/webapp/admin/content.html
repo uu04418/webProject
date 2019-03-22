@@ -21,13 +21,14 @@
     
     <script type="text/javascript" src="../js/base_pagination.js">  </script>
     <script type="text/javascript" src="../js/service/contentService.js">  </script>
+    <script type="text/javascript" src="../js/service/loginService.js">  </script>
     <script type="text/javascript" src="../js/service/financialService.js">  </script>
     <script type="text/javascript" src="../js/controller/baseController.js">  </script>
     <script type="text/javascript" src="../js/controller/contentController.js">  </script>
     
 </head>
 <body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="contentController"
-ng-init="finanList()" >
+ng-init="finanList();loginName()" >
   <!-- .box-body -->
                     <div class="box-header with-border">
                         <h3 class="box-title">管理</h3>

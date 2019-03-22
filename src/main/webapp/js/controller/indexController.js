@@ -7,13 +7,46 @@ app.controller('indexController' ,function($scope,$controller , loginService){
 	$scope.loginName=function(){
 		loginService.loginName().success(
 			function(response){
-				$scope.loginUser=response.loginUser;
+				if (response.success) {
+					$scope.loginUser= response.data;
+				}else {
+					alert(response.message);
+					window.location.href='login.html';
+				}
+				
 			}			
 		);
 	}   
 	
+	$scope.uploadFile =function () {
+		loginService.uploadFile().success(
+				function(response){
+					if (response.code ==200) { 
+						
+						$.scope.entity.avatar = response.obj;
+					}
+					
+				}			
+			);
+	}
+	
+	$scope.setUserMess=function () {
+		loginService.loginName().success(
+				function(response){
+					if (response.success) {
+						response.data.password=null;
+						$scope.entity= response.data;
+					}else {
+						alert(response.message);
+						window.location.href='login.html';
+					}
+					
+				}			
+			);
+		
+	}
+	
 	$scope.login=function(){
-		alert($scope.entity.username);
 		loginService.login($scope.entity).success(
 			function(response){
 				$scope.loginUser=response.loginUser;
@@ -28,6 +61,14 @@ app.controller('indexController' ,function($scope,$controller , loginService){
 			}
 		);
 		
+	}
+	
+	$scope.updateUser=function () {
+		loginService.updateUser($scope.entity).success(
+				function (response) {
+					alert(response.message);
+				}
+			);
 	}
 	
 	

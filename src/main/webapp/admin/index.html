@@ -78,56 +78,6 @@
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
                                         <li>
-                                            <!-- start message -->
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="loginUser.avatar" class="img-circle" alt="User Image">
-                                                </div>
-                                                <h4>
-                                                    系统消息
-                                                    <small><i class="fa fa-clock-o"></i> 5 分钟前</small>
-                                                </h4>
-                                                <p>欢迎登录系统?</p>
-                                            </a>
-                                        </li>
-                                        <!-- end message -->
-                                        <li>
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="../img/user3-128x128.jpg" class="img-circle" alt="User Image">
-                                                </div>
-                                                <h4>
-                                                    团队消息
-                                                    <small><i class="fa fa-clock-o"></i> 2 小时前</small>
-                                                </h4>
-                                                <p>你有新的任务了</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="{{loginUser.avatar}}" class="img-circle" alt="User Image">
-                                                </div>
-                                                <h4>
-                                                    Developers
-                                                    <small><i class="fa fa-clock-o"></i> Today</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="{{loginUser.avatar}}" class="img-circle" alt="User Image">
-                                                </div>
-                                                <h4>
-                                                    Sales Department
-                                                    <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
-                                        <li>
                                             <a href="#">
                                                 <div class="pull-left">
                                                     <img src="../img/user4-128x128.jpg" class="img-circle" alt="User Image">
@@ -272,7 +222,7 @@
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
-                                    <img src="loginUser.avatar" class="img-circle" alt="User Image">
+                                    <img src="{{loginUser.avatar}}" class="img-circle" alt="User Image">
 
                                     <p>
                                          {{loginUser.username}}   
@@ -283,7 +233,8 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">修改密码</a>
+                                        <a href="#" class="btn btn-default btn-flat"  data-toggle="modal"
+                                         data-target="#editUser" ng-click="setUserMess()" >修改资料</a>
                                     </div>
                                     <div class="pull-right">
                                         <a href="../logout" class="btn btn-default btn-flat">注销</a>
@@ -353,37 +304,14 @@
 					<li class="treeview">
 				        <a href="#">
 				            <i class="fa fa-folder"></i> 
-				            <span>商品管理</span>
+				            <span>尚未开发</span>
 				            <span class="pull-right-container">
 				       			<i class="fa fa-angle-left pull-right"></i>
 				   		 	</span>
 				        </a>
 				        <ul class="treeview-menu">
-				
 				            <li id="admin-login">
-				                <a href="brand.html" target="iframe">
-				                    <i class="fa fa-circle-o"></i>品牌管理
-				                </a>
-				            </li>
-							<li id="admin-login">
-				                <a href="specification.html" target="iframe">
-				                    <i class="fa fa-circle-o"></i>规格管理
-				                </a>
-				            </li>							
-							<li id="admin-login">
-				                <a href="type_template.html" target="iframe">
-				                    <i class="fa fa-circle-o"></i>模板管理
-				                </a>
-				            </li>
-							<li id="admin-login">
-				                <a href="item_cat.html" target="iframe">
-				                    <i class="fa fa-circle-o"></i>分类管理
-				                </a>
-				            </li>
-							<li id="admin-login">
-				                <a href="goods.html" target="iframe">
-				                    <i class="fa fa-circle-o"></i>商品审核
-				                </a>
+				               
 				            </li>
 				        </ul>                        
 				    </li>
@@ -414,6 +342,83 @@
         <!-- 底部导航 /-->
 
     </div>
+    
+    
+<!-- 编辑窗口 -->
+<div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="myModalLabel">用户资料</h3>
+		</div>
+		<div class="modal-body">	
+			 <table class="table table-bordered table-striped"  width="800px">			
+		      	  		      	<tr>
+                             
+<td>电话号码</td>
+
+                             <td>
+                            <input  class="form-control" ng-model="entity.telephone" >
+                             
+                             </td>
+
+                        </tr>		
+		      	<tr>
+                             
+<td>登录账号</td>
+
+                             <td><input  class="form-control" ng-model="entity.username" ></td>
+
+                        </tr>		
+		      	<tr>
+<td>登录密码</td>
+
+                             <td><input  class="form-control" ng-model="entity.newword" ></td>
+
+                        </tr>		
+		      	<tr>
+<td>原始密码</td>
+
+                             <td><input  class="form-control" ng-model="entity.password" ></td>
+
+                        </tr>	
+                        
+                        <tr>
+<td>用户头像</td>
+		      		<td>
+						<table>
+							<tr>
+								<td>
+								<input type="file" id="file" />				                
+					                <button ng-click="uploadFile()" class="btn btn-primary" type="button" >
+				                   		上传
+					                </button>	
+					            </td>
+								<td>
+									<img  src="{{loginUser.avatar}}" width="200px" height="200px">
+								</td>
+							</tr>						
+						</table>
+		      		</td>
+		      	</tr>		      		
+		      	<tr>				      			
+                             
+
+		      	
+                             
+
+                            	
+		  		      	
+			 </table>				
+		</div>
+		<div class="modal-footer">						
+			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="updateUser()">保存</button>
+			<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+		</div>
+	  </div>
+	</div>
+</div>    
 
 </body>
 

@@ -6,11 +6,11 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 	<title>秋霞谍报管理后台</title>
-	 <link rel="icon" href="../assets/img/favicon.ico">
+	 <link rel="icon" href="/webProject/assets/img/favicon.ico">
 
 
-    <link rel="stylesheet" type="text/css" href="css/webbase.css" />
-    <link rel="stylesheet" type="text/css" href="css/pages-login-manage.css" />
+    <link rel="stylesheet" type="text/css" href="/webProject/css/webbase.css" />
+    <link rel="stylesheet" type="text/css" href="/webProject/css/pages-login-manage.css" />
 </head>
 
 <body>
@@ -34,16 +34,16 @@
 				<div class="tab-content tab-wraped">
 					<div id="index" class="tab-pane">
 						<p>二维码登录，暂为官网二维码</p>
-						<img src="../img/wx_cz.jpg" />
+						<img src="/webProject/img/wx_cz.jpg" />
 					</div>
 					<div id="profile" class="tab-pane  active">
 						<form class="sui-form" action="/webProject/login" method="post" id="loginform">
 							<div class="input-prepend"><span class="add-on loginname"></span>
-								<input id="prependedInput" name="username" type="text" 
+								<input class="lgn_name" id="prependedInput" name="username" type="text" 
 								placeholder="邮箱/用户名/手机号" class="span2 input-xfat">
 							</div>
 							<div class="input-prepend"><span class="add-on loginpwd"></span>
-								<input id="prependedInput" name="password" 
+								<input class="lgn_word" id="prependedInput" name="password" 
 								type="password" placeholder="请输入密码" class="span2 input-xfat">
 							</div>
 							<div class="setting">
@@ -83,9 +83,9 @@
 	</div>
 
 
-<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="js/plugins/sui/sui.min.js"></script>
-<script type="text/javascript" src="js/plugins/jquery-placeholder/jquery.placeholder.min.js"></script>
+<script type="text/javascript" src="/webProject/js/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/webProject/js/plugins/sui/sui.min.js"></script>
+<script type="text/javascript" src="/webProject/js/plugins/jquery-placeholder/jquery.placeholder.min.js"></script>
 <script src="js/pages/jquery.slideunlock.js"></script>
 <script>
 	$(function(){
@@ -101,16 +101,18 @@
 	})
 	
 	function login() {
-       	var username = $('#prependedInput').val();
-       	var password = $('#prependedInput').val();
-       	alert(username);
+       	var username = $('.lgn_name').val();
+       	var password = $('.lgn_word').val();
+       	alert(password);
        	$.ajax({
 			data : {username : username ,password:password} ,
 			url : '/webProject/login',
 			success : function(data) {
 				alert(data.msg);
 				if (data.code ==200) {
-					window.location.href="admin/index.html"
+					window.location.href="/webProject/admin/index.html"
+				}else {
+				
 				}
 			 	
 			}
