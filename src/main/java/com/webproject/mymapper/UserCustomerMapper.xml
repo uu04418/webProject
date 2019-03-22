@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.webproject.mymapper.UserCustomerMapper" >
+  
+	  <select id="searchUserByUserNameOrTelephone" resultType="com.webproject.entity.Loginuser">
+	  		SELECT * from loginuser where username = #{username} or telephone = #{username}
+	  </select>
+	  
+	  
+	  
+	  <select id="SearchFinandetail" resultType="com.webproject.myentity.FinandetailCustomer">
+	  		SELECT
+				*
+			FROM
+				finandetail
+			LEFT JOIN financial ON finandetail.financialid = financial.financialid
+			where 1=1
+			<if test="search !=null">
+				<if test="search.userid !=null">
+					AND finandetail.userid = #{search.userid}
+				</if>
+			</if>
+			
+			<!-- 分页的查询条件 -->
+			<if test="pagequery !=null ">
+				limit #{pagequery.pagestart} , #{pagequery.pagesize}
+			</if>
+	  </select>
+	  
+	  
+	   <select id="SearchFinandetailCount" resultType="integer">
+	  		SELECT
+				COUNT(1)
+			FROM
+				finandetail
+			LEFT JOIN financial ON finandetail.financialid = financial.financialid
+			where 1=1
+			<if test="search !=null">
+				<if test="search.userid !=null">
+					AND finandetail.userid = #{search.userid}
+				</if>
+			</if>
+	  </select>
+  
+</mapper>
