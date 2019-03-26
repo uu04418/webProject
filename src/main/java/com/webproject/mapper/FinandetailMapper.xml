@@ -240,4 +240,7 @@
       state = #{state,jdbcType=INTEGER}
     where finandetailid = #{finandetailid,jdbcType=BIGINT}
   </update>
+  
+  
+   
 </mapper>

@@ -32,7 +32,17 @@ public class Loginuser {
 
     private String newword;
     
-    public String getNewword() {
+    private String fromDate;
+    
+    public String getFromDate() {
+		return fromDate;
+	}
+
+	public void setFromDate(String fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public String getNewword() {
 		return newword;
 	}
 

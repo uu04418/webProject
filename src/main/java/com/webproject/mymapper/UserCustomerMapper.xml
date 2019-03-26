@@ -5,7 +5,9 @@
 	  <select id="searchUserByUserNameOrTelephone" resultType="com.webproject.entity.Loginuser">
 	  		SELECT * from loginuser where username = #{username} or telephone = #{username}
 	  </select>
-	  
+	   <select id="getNextUserId" resultType="string">
+	   SELECT MAX(userid) + 1 from loginuser
+	  </select>
 	  
 	  
 	  <select id="SearchFinandetail" resultType="com.webproject.myentity.FinandetailCustomer">
@@ -48,5 +50,51 @@
 			userid != #{userid}
 			and ( username = #{username} or telephone = #{telephone} )  
 	  </select>
+	  
+	  <select id="searchCharByNeay"  resultType="com.webproject.myentity.FinandetailCustomer" >
+		   SELECT
+			*
+		FROM
+			finandetail
+		LEFT JOIN financial ON finandetail.financialid = financial.financialid
+		WHERE
+			YEAR (finandetail.createtime) = YEAR ( #{date} )
+		AND finandetail.userid = #{userid}
+  </select>
+  
+  
+   <select id="searchCharByNeayAndMonth"  resultType="com.webproject.myentity.FinandetailCustomer" >
+		   SELECT
+			*
+		FROM
+			finandetail
+		LEFT JOIN financial ON finandetail.financialid = financial.financialid
+		WHERE
+			YEAR (finandetail.createtime) = YEAR ( now() )
+    AND  MONTH(finandetail.createtime) = MONTH(now())
+		AND finandetail.userid =  #{userid}
+  </select>
+  
+  
+   <select id="monthChartlist"  resultType="com.webproject.entity.Montherchartpanel" >
+		  SELECT * from montherchartpanel
+
+				where montherchartpanel.userid = #{userid}
+			
+			ORDER BY `year` desc  , `month` desc 
+			
+			<!-- 分页的查询条件 -->
+			<if test="pagequery !=null ">
+				limit #{pagequery.pagestart} , #{pagequery.pagesize}
+			</if>
+  </select>
+  
+  <select id="monthChartlistCount"  resultType="integer" >
+		  SELECT count(1) from montherchartpanel
+
+				where montherchartpanel.userid = #{userid}
+			
+  </select>
+  
   
 </mapper>

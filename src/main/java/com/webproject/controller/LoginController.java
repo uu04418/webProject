@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.webproject.entity.Loginuser;
 import com.webproject.service.LoginService;
 import com.webproject.util.CheckDataUtil;
+import com.webproject.util.DateUtil;
 import com.webproject.util.IDUtils;
 import com.webproject.util.Result;
 import com.webproject.util.ResultMap;
@@ -33,6 +34,13 @@ public class LoginController {
 		return "admin/" +   "login";
 	}
 	
+	@RequestMapping("/logout")
+	@ResponseBody
+	public Result logout() {
+		request.getSession().removeAttribute("loginUser");
+		return  new Result(true ,"退出成");
+	}
+	
 	@RequestMapping("/showPage/{attr}")
 	public String showPage (@PathVariable String attr) {
 		System.out.println(attr);
@@ -42,6 +50,9 @@ public class LoginController {
 	@RequestMapping("/updateUser")
 	@ResponseBody
 	public Result updateUser (@RequestBody Loginuser user) {
+		if (CheckDataUtil.checkisEmpty(user.getPassword())) {
+			user.setPassword(null);
+		}
 		return loginService.updateUser(user);
 	};
 	
@@ -52,15 +63,16 @@ public class LoginController {
 	
 	@RequestMapping("/login")
 	@ResponseBody
-	public ResultMap dologin (String username , String password) {
+	public ResultMap dologin (@RequestBody Loginuser loginUser) {
 		
-		if (CheckDataUtil.checkisEmpty(username)
-				&& CheckDataUtil.checkisEmpty(password)) {
+		if ( CheckDataUtil.checkisEmpty(loginUser)
+				&&CheckDataUtil.checkisEmpty(loginUser.getUsername())
+				&& CheckDataUtil.checkisEmpty(loginUser.getPassword())) {
 			return ResultMap.build(400, "请输入账号和密码");
 		}
 		
-		username = username.replace(" ", "");
-		
+		String username = loginUser.getUsername().replace(" ", "");
+		String password = loginUser.getPassword();
 		Loginuser loginuser = loginService.checkUser(username , password);
 		if (CheckDataUtil.checkNotEmpty(loginuser)) {
 			
@@ -73,27 +85,36 @@ public class LoginController {
 			if (CheckDataUtil.checkNotEqual(loginuser.getPassword(), password)) {
 				return ResultMap.build(400, "登录失败,密码错误");
 			}
-			
-			System.out.println("登录成功 " + username + "-" + password);
-			request.getSession().setAttribute("loginUser", loginuser);
-			return ResultMap.build(200, "登录成功" );
+			return ResultMap.build(200, "登录成功" , loginuser.getUserid());
 		} else {
 			return ResultMap.build(400, "登录失败,密码错误");
 		}
 		
 	};
 	
+	
+	@RequestMapping("/register")
 	@ResponseBody
-	@RequestMapping("/login/userMessage")
-	public Result loginName (String username , String password) {
-		Object loginUser = request.getSession().getAttribute("loginUser");
-		if (CheckDataUtil.checkisEmpty(loginUser)) {
-			return new Result(false, "登录超时");
+	public ResultMap register (@RequestBody Loginuser user) {
+		String username = user.getUsername();
+		String password = user.getPassword();
+		if (CheckDataUtil.checkisEmpty(username)
+				&& CheckDataUtil.checkisEmpty(password)) {
+			return ResultMap.build(400, "请输入账号和密码");
 		}
-		Result result = new Result();
-		result.setSuccess(true);
-		result.setData(loginUser);
-		result.setMessage("登录成功");
-		return result;
+		username = username.replace(" ", "");
+		
+		return loginService.register(username,password);
+		
+	};
+	
+	
+	
+	
+	
+	@ResponseBody
+	@RequestMapping("/login/getUserMessage")
+	public Result getUserMessage (Long userid) {
+		return loginService.getUserMessage(userid);
 	};
 }

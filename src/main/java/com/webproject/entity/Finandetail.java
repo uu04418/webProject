@@ -23,8 +23,19 @@ public class Finandetail {
 
     /** 0-正常 1-删除*/
     private Integer state;
+    
+    private String mytime ;
+    
 
-    public Long getFinandetailid() {
+    public String getMytime() {
+		return mytime;
+	}
+
+	public void setMytime(String mytime) {
+		this.mytime = mytime;
+	}
+
+	public Long getFinandetailid() {
         return finandetailid;
     }
 

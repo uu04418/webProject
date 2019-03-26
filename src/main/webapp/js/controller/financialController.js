@@ -28,12 +28,12 @@ app.controller('financialController' ,function($scope,$controller ,financialServ
 		}				
 		serviceObject.success(
 			function(response){
+	        	
 				if(response.success){
-					//重新查询 
-		        	$scope.reloadList();//重新加载
 				}else{
 					alert(response.message);
 				}
+				$scope.reloadList();//重新加载
 			}		
 		);				
 	}

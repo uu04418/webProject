@@ -2,6 +2,9 @@ package com.webproject.mapper;
 
 import com.webproject.entity.Financial;
 import com.webproject.entity.FinancialExample;
+import com.webproject.myentity.FinandetailCustomer;
+
+import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +30,5 @@ public interface FinancialMapper {
     int updateByPrimaryKeySelective(Financial record);
 
     int updateByPrimaryKey(Financial record);
+
 }

@@ -3,6 +3,8 @@ package com.webproject.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import com.github.pagehelper.PageHelper;
 import com.webproject.entity.Financial;
 import com.webproject.entity.FinancialExample;
 import com.webproject.entity.Finandetail;
+import com.webproject.entity.Loginuser;
 import com.webproject.mapper.FinancialMapper;
 import com.webproject.mapper.FinandetailMapper;
 import com.webproject.myentity.FinandetailCustomer;
@@ -18,6 +21,7 @@ import com.webproject.mymapper.UserCustomerMapper;
 import com.webproject.service.FinancialService;
 import com.webproject.util.CheckDataUtil;
 import com.webproject.util.DateUtil;
+import com.webproject.util.IDUtils;
 import com.webproject.util.PageQuery;
 import com.webproject.util.PageResult;
 import com.webproject.util.Result;
@@ -31,6 +35,8 @@ public class FinancialServiceImpl implements FinancialService {
 	private UserCustomerMapper userCustomerMapper;
 	@Autowired
 	private FinandetailMapper  finandetailMapper; 
+	@Autowired
+	private HttpServletRequest request;
 
 	@Override
 	public PageResult findPage(Financial financial, int pageNum, int pageSize) {
@@ -58,6 +64,8 @@ public class FinancialServiceImpl implements FinancialService {
 				|| CheckDataUtil.checkisEmpty(financial.getFatherid())
 				|| CheckDataUtil.checkisEmpty(financial.getType()))
 			return new Result(false, "输入必须的数据");
+		
+	
 		financialMapper.insertSelective(financial);
 		return new Result(false, "插入成功");
 	}
@@ -97,7 +105,15 @@ public class FinancialServiceImpl implements FinancialService {
 	public Result add(Finandetail financial) {
 		// TODO Auto-generated method stub
 		try {
-			financial.setCreatetime(new Date());
+			if (CheckDataUtil.checkNotEmpty(financial.getMytime())) {
+				Date strToDate = DateUtil.strToDate("yyyy-MM-dd", financial.getMytime());
+				if (CheckDataUtil.checkisEmpty(strToDate)) {
+					return new Result(false, "时间格式错误");
+				}
+				financial.setCreatetime(strToDate);
+			}else {
+				financial.setCreatetime(new Date());
+			}
 			finandetailMapper.insertSelective(financial);
 			return new Result(true, "新增成功");
 		} catch (Exception e) {
@@ -110,7 +126,14 @@ public class FinancialServiceImpl implements FinancialService {
 	public Result update(Finandetail financial) {
 		// TODO Auto-generated method stub
 		try {
-			financial.setCreatetime(new Date());
+			
+			if (CheckDataUtil.checkNotEmpty(financial.getMytime())) {
+				Date strToDate = DateUtil.strToDate("yyyy-MM-dd", financial.getMytime());
+				if (CheckDataUtil.checkisEmpty(strToDate)) {
+					return new Result(false, "时间格式错误");
+				}
+				financial.setCreatetime(strToDate);
+			}
 			finandetailMapper.updateByPrimaryKeySelective(financial);
 			return new Result(true, "编辑成功");
 		} catch (Exception e) {
@@ -118,5 +141,49 @@ public class FinancialServiceImpl implements FinancialService {
 		}
 		
 	}
+
+	@Override
+	public Finandetail oneDetail(Long finandetailid) {
+		// TODO Auto-generated method stub
+		return  finandetailMapper.selectByPrimaryKey(finandetailid);
+	}
+
+	@Override
+	public Result updateDetailDelete(Long[] ids) {
+		
+		try {
+			for (int i = 0;i<ids.length;i++) {
+				Finandetail update = new Finandetail();
+				update.setFinandetailid(ids[i]);
+				update.setState(1);
+				finandetailMapper.updateByPrimaryKeySelective(update);
+			}
+			return new Result(true,"成功");
+		} catch (Exception e) {
+			return new Result(true,"失败");
+		}
+	}
+
+	@Override
+	public Result deleteDetail(Long id) {
+		// TODO Auto-generated method stub
+		finandetailMapper.deleteByPrimaryKey(id);
+		return null;
+	}
+
+	@Override
+	public List<FinandetailCustomer> searchCharByNeay(Long userid, String dateString) {
+		// TODO Auto-generated method stub
+		Date date = DateUtil.strToDate(dateString+"01月01日");
+		return userCustomerMapper.searchCharByNeay(userid ,date);
+	}
+
+	@Override
+	public List<FinandetailCustomer> searchCharByNeayAndMonth(Long userid, String year, String month) {
+		// TODO Auto-generated method stub
+		Date date = DateUtil.strToDate(year+ month+"01日");
+		return userCustomerMapper.searchCharByNeayAndMonth(userid ,date);
+	}
+
 
 }

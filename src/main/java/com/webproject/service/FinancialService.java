@@ -1,5 +1,8 @@
 package com.webproject.service;
 
+import java.util.Date;
+import java.util.List;
+
 import com.webproject.entity.Financial;
 import com.webproject.entity.Finandetail;
 import com.webproject.myentity.FinandetailCustomer;
@@ -21,5 +24,16 @@ public interface FinancialService {
 	public Result add(Finandetail financial);
 
 	public Result update(Finandetail financial);
+
+	Finandetail  oneDetail(Long finandetailid);
+
+	public Result updateDetailDelete(Long[] ids);
+
+	public Result deleteDetail(Long id);
+	
+
+	public List<FinandetailCustomer>  searchCharByNeay(Long userid, String dateString);
+
+	public List<FinandetailCustomer> searchCharByNeayAndMonth(Long userid, String year, String month);
 
 }

@@ -1,6 +1,10 @@
 package com.webproject.controller;
 
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.webproject.entity.Financial;
 import com.webproject.entity.Finandetail;
+import com.webproject.entity.Loginuser;
 import com.webproject.myentity.FinandetailCustomer;
 import com.webproject.service.FinancialService;
 import com.webproject.util.CheckDataUtil;
@@ -20,10 +25,11 @@ public class FinancialController {
 	
 	@Autowired
 	private FinancialService financialService;
+	@Autowired
+	private HttpServletRequest request;
 	
 	@RequestMapping("/belogin/searchList")
 	public PageResult searchList(int page ,int rows ,@RequestBody Financial financial) {
-		System.out.println(page + "==========" + rows);
 		return financialService.findPage(financial, page, rows);
 		
 	}
@@ -32,6 +38,13 @@ public class FinancialController {
 	@RequestMapping("/belogin/add")
 	public Result add(@RequestBody Financial financial) {
 		return financialService.add(financial);
+		
+	}
+	
+	
+	@RequestMapping("/belogin/deleteDetail")
+	public Result deleteDetail(Long id) {
+		return financialService.deleteDetail(id);
 		
 	}
 	
@@ -52,6 +65,7 @@ public class FinancialController {
 	@RequestMapping("/belogin/detailList")
 	public PageResult detailList( @RequestBody FinandetailCustomer search 
 			,int page ,int rows ) {
+		
 		return financialService.detailList(search , page ,rows);
 		
 	}
@@ -77,6 +91,29 @@ public class FinancialController {
 		return financialService.update(financial);
 		
 	}
+	
+	
+	@RequestMapping("/belogin/oneDetail")
+	public Finandetail oneDetail(Long id  ) {
+		return financialService.oneDetail(id);
+		
+	}
+	
+	
+	@RequestMapping("/belogin/updateDetailDelete")
+	public Result updateDetailDelete( Long [] ids  ) {
+		return financialService.updateDetailDelete(ids);
+		
+	}
+	
+	
+	@RequestMapping("/belogin/searchCharByNeay")
+	public List<FinandetailCustomer> searchCharByNeay( Long userid , String dateString  ) {
+		return financialService.searchCharByNeay(userid,dateString);
+		
+	}
+	
+	
 	
 	
 	

@@ -40,6 +40,7 @@
 	<mvc:resources location="/plugins/" mapping="/plugins/**"/>
 	<mvc:resources location="/img/" mapping="/img/**"/>
 	<mvc:resources location="/admin/" mapping="/admin/**"/>
+	<mvc:resources location="/**/**" mapping="*.png"/>
 	<mvc:annotation-driven />
 	
 	

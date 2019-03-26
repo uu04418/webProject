@@ -1,6 +1,8 @@
  //品牌控制层 
 app.controller('baseController' ,function($scope){	
 	
+	$scope.AppUrl = 'https://www.zzw777.com/webProject';
+	$scope.loginUser={avatar:''};
     //重新加载列表 数据
     $scope.reloadList=function(){
     	//切换页码  

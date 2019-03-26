@@ -1,15 +1,26 @@
 //服务层
 app.service('loginService',function($http){
-	    	
+	
+	//var AppUrl = 'http://localhost:8040/webProject';
+	var AppUrl = 'https://www.zzw777.com/webProject';
 	//显示登录用户名称
-	this.loginName=function(){
-		
-		return $http.get('/webProject/login/userMessage');		
+	this.getUserMessage=function(userid){
+		return $http.get( AppUrl +  '/login/getUserMessage?userid='+userid);		
+	}
+	
+	//用户登录
+	this.register=function(entity){
+		return $http.post( AppUrl +  '/register' ,entity);		
+	}
+	
+	//用户登录
+	this.userlogin=function(entity){
+		return $http.post( AppUrl +  '/login' ,entity);		
 	}
 	
 	//显示登录用户名称
-	this.login=function(entity){
-		return $http.get('/webProject/login' ,entity);		
+	this.logout=function(){
+		return $http.get( AppUrl + '/logout' );		
 	}
 	
 	//上传文件
@@ -19,7 +30,7 @@ app.service('loginService',function($http){
 		formdata.append('file',file.files[0]);//file 文件上传框的name
 		
 		return $http({
-			url:'/webProject/uploadFile',		
+			url: AppUrl + '/uploadFile',		
 			method:'post',
 			data:formdata,
 			headers:{ 'Content-Type':undefined },
@@ -30,7 +41,7 @@ app.service('loginService',function($http){
 	
 	//显示登录用户名称
 	this.updateUser=function(entity){
-		return $http.post('/webProject/updateUser' ,entity);		
+		return $http.post(AppUrl +  '/updateUser' ,entity);		
 	}
 	
 	

@@ -28,7 +28,7 @@
     
 </head>
 <body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="contentController"
-ng-init="finanList();loginName()" >
+ng-init="finanList()" >
   <!-- .box-body -->
                     <div class="box-header with-border">
                         <h3 class="box-title">管理</h3>
@@ -65,7 +65,7 @@ ng-init="finanList();loginName()" >
                              <th class="sorting">财务类型</th>			
                              <th class="sorting">财务标题</th>			
                              <th class="sorting">小计金额</th>			
-                             <th class="sorting">操作时间</th>			
+                             <th class="sorting">统计时间</th>			
                              <th class="sorting">状态</th>	
 								     				
 					                      <th class="text-center">操作</th>
@@ -73,7 +73,7 @@ ng-init="finanList();loginName()" >
 			                      </thead>
 			                      <tbody>
 			                          <tr ng-repeat="entity in list">
-			                              <td><input  type="checkbox" ng-click="updateSelection($event,entity.id)"></td>			                              
+			                              <td><input  type="checkbox" ng-click="updateSelection($event,entity.finandetailid)"></td>			                              
                             <td>{{typestatus[entity.fatherid]}}</td>	
                              <td>{{entity.categoryname}}</td>			
                              <td>{{entity.monery}}</td>			
@@ -83,8 +83,11 @@ ng-init="finanList();loginName()" >
                              <td>{{state[entity.state]}}</td>			
 		                                 
                                <td class="text-center">                                           
-                              	  <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" ng-click="findOne(entity.id)" >修改</button>   
-                              	   <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" ng-click="findOne(entity.id)" >彻底删除</button>                                                                         
+                              	   <button  type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" ng-click="findOne(entity.finandetailid)" >修改</button>   
+                              	                        
+                               </td>
+                               <td>
+                               <button ng-if="entity.state == 1" type="button" class="btn bg-olive btn-xs"  ng-click="deleteDetail(entity.finandetailid)" >彻底删除</button>                                                    
                                </td>
 			                          </tr>									 
 			                      </tbody>
@@ -100,13 +103,12 @@ ng-init="finanList();loginName()" >
 <!-- 编辑窗口 -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" >
-	<div class="modal-content">
+	<div class="modal-content" style="margin-top: -160px;width: 90%">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="myModalLabel">编辑</h3>
 		</div>
 		<div class="modal-body">	
-			 <table class="table table-bordered table-striped"  width="800px">			
+			 <table class="table table-bordered table-striped" >			
 		      	  		      	<tr>
                              
 <td>财务标题</td>
@@ -130,14 +132,21 @@ ng-init="finanList();loginName()" >
 
                              <td><input type="number" class="form-control" ng-model="entity.monery" placeholder="输入类目金额" ></td>
 
+                        </tr>	
+                 <td>自定时间</td>
+
+                             <td><input  class="form-control" ng-model="entity.mytime" placeholder="输入正确格式：2007-05-01 (如果不填  创建是：当前时间  修改：不做时间修改)" ></td>
+
                         </tr>		
 		      	
                              
 <td>状态</td>
 
                              <td>
-                             选中正常： 
-                             <input type="checkbox" ng-model="entity.state" placeholder="状态" ng-true-value="0" ng-false-value="1" ></td>
+                             选中正常：   
+                             <input type="checkbox" ng-model="entity.state" 
+                             placeholder="状态" ng-true-value="0" ng-false-value="1" 
+                             ></td>
 
                         </tr>		
 		      	<tr>

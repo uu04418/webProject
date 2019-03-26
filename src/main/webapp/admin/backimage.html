@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>报表背景图片管理</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+	
+	<!-- 分页组件开始 -->
+	<script src="../plugins/angularjs/pagination.js"></script>
+	<link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+	<!-- 分页组件结束 -->
+	
+	<script type="text/javascript" src="../js/base_pagination.js"></script>
+	<script type="text/javascript" src="../js/service/backerimageService.js"></script>
+	<script type="text/javascript" src="../js/controller/baseController.js"></script>
+	<script type="text/javascript" src="../js/controller/backerimageController.js"></script>
+    
+</head>
+
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou"
+ ng-controller="backerimageController" ng-init="findAll()">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">规格管理</h3>
+                    </div>
+                    <div class="box-body">
+                        <!-- 数据表格 -->
+                        <div class="table-box">
+
+                            <!--工具栏-->
+                            <div class="pull-left">
+                                <div class="form-group form-inline">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--工具栏/-->
+			                  <!--数据列表-->
+			                  <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+			                      <thead>
+			                          <tr>
+										  <th class="sorting_asc">数据主键</th>
+									      <th class="sorting">描述名称</th>	
+									      <th class="sorting">预览图片</th>									     												
+					                      <th class="text-center">操作</th>
+			                          </tr>
+			                      </thead>
+			                      <tbody>
+			                          <tr ng-repeat="entity in list">
+				                          <td>{{entity.imageid}}</td>
+									      <td>{{entity.descname}}</td>
+									      
+									      <td ng-if="entity.url !=''"> 
+									      <!--  
+									       <a href="{{entity.url}}" target="_blank"  >预览图片 </a>
+									       -->
+									       <img  src="{{entity.url}}" width="100px" height="100px">		
+									       </td>	
+									     
+									      <td ng-if="entity.url ==''">  无背景图片</td>			
+		                                  <td class="text-center">                                           
+		                                 	  <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" ng-click="findOne(entity)">修改</button>                                           
+		                                  </td>
+			                          </tr>
+									 
+			                      </tbody>
+			                  </table>
+                        </div>
+                        <!-- 数据表格 /--> 
+                     </div>
+                    <!-- /.box-body -->                    
+	          		    
+                                
+<!-- 编辑窗口 -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="myModalLabel">报表背景图片编辑</h3>
+		</div>
+		<div class="modal-body">
+		
+		<label for="name">背景描述</label>
+		<input type="text" class="form-control "  
+			  readonly="readonly" 		 ng-model="showEntity.descname"	placeholder="输入电话号码"> 	
+									
+		 <label for="name">原始图片</label>
+		 <input type="file" id="file" />
+		 <img  src="{{showEntity.url}}" width="150px" height="150px">				                
+         <button ng-click="uploadFile(showEntity.imageid)" class="btn btn-primary"
+       data-toggle="modal" data-target="#showMessage"     data-dismiss="modal" aria-hidden="true"   type="button" >
+           		上传
+         </button>	
+          <button style="margin-left: 40px;" ng-click="deleteFile(showEntity.imageid)" class="btn btn-primary" 
+					  data-toggle="modal" data-target="#showMessage"            data-dismiss="modal" aria-hidden="true"   type="button" >
+				                   		移除背景
+					                </button>	
+			
+		</div>
+	  </div>
+	</div>
+</div>   
+
+
+
+<!-- 编辑窗口 -->
+<div class="modal fade" id="showMessage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+	<div class="modal-content">
+		<div class="modal-header">
+			<h3 id="myModalLabel">{{showMessage.showTipMessage}} 
+			<span ng-if ="second > 0" style="color: red;"> {{second}}</span>
+			</h3>
+		</div>
+	  </div>
+	</div>
+</div> 
+
+</body>
+
+</html>

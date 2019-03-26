@@ -125,7 +125,6 @@ public class DateUtil {
 		try {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
 			date = simpleDateFormat.parse(dateStr);
-			System.out.println("格式后时间" + date);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -222,6 +221,31 @@ public class DateUtil {
 		long time = date.getTime() + plus * 24 * 60 * 60 * 1000;
 
 		return DateUtil.DateToStr(format, new Date(time));
+	}
+
+	public static String DateToMonth(String format, Date date) {
+		// TODO Auto-generated method stub
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+		format = simpleDateFormat.format(date).split("-")[1];
+		if ("01".equals(format)) {return "一月";}
+		if ("02".equals(format)) {return "二月";}
+		if ("03".equals(format)) {return "三月";}
+		if ("04".equals(format)) {return "四月";}
+		if ("05".equals(format)) {return "五月";}
+		if ("06".equals(format)) {return "六月";}
+		if ("07".equals(format)) {return "七月";}
+		if ("08".equals(format)) {return "八月";}
+		if ("09".equals(format)) {return "九月";}
+		if ("10".equals(format)) {return "十月";}
+		if ("11".equals(format)) {return "十一月";}
+		if ("12".equals(format)) {return "十二月";}
+		return "一月";
+	}
+
+	public static int DateToOneDay(String format, Date date) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+		format = simpleDateFormat.format(date).split("-")[2];
+		return Integer.parseInt(format);
 	}
 
 

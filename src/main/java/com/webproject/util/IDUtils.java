@@ -46,29 +46,26 @@ public class IDUtils {
 	static char[] numArray = { '零', '一', '二', '三', '四', '五', '六', '七', '八', '九' };
 	static char[] numArraybig = { '零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖' };
 	static String[] unitsbig = { "", "拾", "佰", "仟", "萬", "拾萬", "佰萬", "仟萬", "亿", "拾亿", "佰亿", "仟亿", "萬亿" };
-	static String[] strArr = { "零", "一", "二","三","四","五","六","七","八","九","十"};
-	
-	
+	static String[] strArr = { "零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十" };
+
 	public static List<Integer> houseModel(String s) {
-		
+
 		List<Integer> returnList = new ArrayList<>();
 		String[] split = s.split("");
-		for (int i=0;i<split.length;i++) {
-			for (int m=0;m<strArr.length;m++) {
+		for (int i = 0; i < split.length; i++) {
+			for (int m = 0; m < strArr.length; m++) {
 				if (split[i].equals(strArr[m])) {
 					returnList.add(m);
 				}
-			};
+			}
+			;
 		}
 		return returnList;
 	}
-	
-	
-	
-	
+
 	/** 吧double乘以n转为int **/
 	public static Integer doubletoint(double d, int n) {
-		
+
 		if (CheckDataUtil.checkNotEmpty(d)) {
 			String prease = d * n + "";
 			prease = prease.substring(0, prease.lastIndexOf("."));
@@ -322,8 +319,6 @@ public class IDUtils {
 		return accessToken;
 	}
 
-	
-
 	public static long searchuseridbyrequest(HttpServletRequest request) {
 		String userid = (String) request.getAttribute("checkuserid");
 		if (!"".equals(userid) && userid != null) {
@@ -331,10 +326,6 @@ public class IDUtils {
 		}
 		return -1L;
 	}
-
-	
-
-	
 
 	/** 获取机器的IP地址 **/
 	public static String spbill_create_ip(HttpServletRequest request) {
@@ -410,8 +401,6 @@ public class IDUtils {
 		return (new sun.misc.BASE64Encoder()).encode(s.getBytes());
 	}
 
-	
-
 	public static String replacePhoneKongGe(String current) {
 
 		if (CheckDataUtil.checkisEmpty(current))
@@ -445,42 +434,50 @@ public class IDUtils {
 		return current;
 	}
 
-	
-	
-	
-	public static double doBargin(double total , long m ) {
+	public static double doBargin(double total, long m) {
 		double s = 0;
-		String max_str = "" ;
+		String max_str = "";
 		if (m > 1) {
-			double max =  ( (total / m )* (1+0.5) ) ;
-			double min = ( (total / m )* (1-0.5) ) ;
+			double max = ((total / m) * (1 + 0.5));
+			double min = ((total / m) * (1 - 0.5));
 			s = min + new Random().nextFloat() * (max - min);
-		}else {
+		} else {
 			s = total;
 		}
-		if (total < s){
+		if (total < s) {
 			s = total;
 		}
 		max_str = String.format("%.1f", s);
-		s = Double.valueOf(max_str)*1.0;
-		int totalInt = doubletoint( total,  100);
-		int sInt =  doubletoint( s,  100);
-		if (sInt == 0 ) 
+		s = Double.valueOf(max_str) * 1.0;
+		int totalInt = doubletoint(total, 100);
+		int sInt = doubletoint(s, 100);
+		if (sInt == 0)
 			sInt = 100;
-		total = (totalInt - sInt )/100;
-		
+		total = (totalInt - sInt) / 100;
+
 		return total;
 
 	}
 
-	
-	
 	public static Date getNextDay(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DAY_OF_MONTH, +1);//+1今天的时间加一天
-        date = calendar.getTime();
-        return date;
-    }
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.DAY_OF_MONTH, +1);// +1今天的时间加一天
+		date = calendar.getTime();
+		return date;
+	}
+
+	public static String getImageName() {
+		// 取当前时间的长整形值包含毫秒///////
+		long millis = System.currentTimeMillis();
+		// long millis = System.nanoTime();
+		// 加上两位随机数
+		Random random = new Random();
+		int end2 = random.nextInt(99);
+		// 如果不足两位前面补0
+		String str = millis + String.format("%02d", end2);
+		String id = new String(str);
+		return id + ".png";
+	}
 
 }

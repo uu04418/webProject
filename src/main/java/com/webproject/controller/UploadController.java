@@ -63,7 +63,7 @@ public class UploadController {
 		}	
 		if (CheckDataUtil.checkNotEmpty(returnPath)) 
 			returnPath = returnPath.substring(0,returnPath.length()-1);
-		return ResultMap.IS_200(returnPath);
+		return ResultMap.build(200, "图片上传成功,点击保存按钮可以修改图像" ,returnPath);
 	}
 	
 	
