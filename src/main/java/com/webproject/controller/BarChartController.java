@@ -8,8 +8,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+
 import org.jfree.chart.ChartColor;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -32,7 +34,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.webproject.entity.Loginuser;
 import com.webproject.entity.Montherchartpanel;
 import com.webproject.entity.Mychartpanel;
 import com.webproject.myentity.CharModel;
@@ -51,8 +52,6 @@ import com.webproject.util.UploadUtil;
 public class BarChartController {
 
 	private static final String returnChartPaht = "http://www.genealogy.zzw777.com/";
-	
-	
 
 	@Autowired
 	private FinancialService financialService;
@@ -62,38 +61,33 @@ public class BarChartController {
 
 	@Autowired
 	private HttpServletRequest request;
-	
-	
-	
+
 	// 统计某一个月的数据
 	@RequestMapping("/belogin/list")
 	@ResponseBody
 	public PageResult chartList(@RequestBody Mychartpanel search, int page, int rows) {
 		return chartPanelService.charList(search, page, rows);
 	}
-	
+
 	// 统计某一个月的数据
 	@RequestMapping("/belogin/monthChartlist")
 	@ResponseBody
-	public PageResult monthChartlist(@RequestBody Montherchartpanel search, int page, int rows ) {
+	public PageResult monthChartlist(@RequestBody Montherchartpanel search, int page, int rows) {
 		return chartPanelService.monthChartlist(search, page, rows);
 	}
-	
-	
+
 	@RequestMapping("/belogin/loadMonth")
 	@ResponseBody
-	public PageResult loadMonth( int page, int rows , Long userid ) {
+	public PageResult loadMonth(int page, int rows, Long userid) {
 		Montherchartpanel search = new Montherchartpanel();
 		search.setUserid(userid);
 		return chartPanelService.monthChartlist(search, page, rows);
 	}
 
-	
 	// 统计某一个月的数据
 	@RequestMapping("/belogin/updateMontherPanel/{userid}")
 	@ResponseBody
-	public Result updateMontherPanel( @RequestBody Montherchartpanel montherchartpanel ,
-			@PathVariable Long userid) {
+	public Result updateMontherPanel(@RequestBody Montherchartpanel montherchartpanel, @PathVariable Long userid) {
 
 		try {
 			String year = montherchartpanel.getYear();
@@ -101,17 +95,17 @@ public class BarChartController {
 			if (!year.contains("年")) {
 				year = year + "年";
 			}
-			
+
 			if (!month.contains("月")) {
 				month = month + "月";
 			}
 
-			List<FinandetailCustomer> searchCharByNeay = financialService.searchCharByNeayAndMonth(userid, year , month);
+			List<FinandetailCustomer> searchCharByNeay = financialService.searchCharByNeayAndMonth(userid, year, month);
 
 			if (CheckDataUtil.checkisEmpty(searchCharByNeay)) {
 				return new Result(false, "当前无数据");
 			}
-			
+
 			if (CheckDataUtil.checkisEmpty(searchCharByNeay)) {
 				return new Result(false, "当前无数据");
 			}
@@ -124,13 +118,12 @@ public class BarChartController {
 					outMonery += find.getMonery();
 				}
 			}
-			
-			String loadTitle = "本月   累计收入:" + inMonery + "  累计支出 :" + outMonery
-					 + "  净收入:" +(inMonery-outMonery) + "";
+
+			String loadTitle = "本月   累计收入:" + inMonery + "  累计支出 :" + outMonery + "  净收入:" + (inMonery - outMonery)
+					+ "";
 			DefaultCategoryDataset defaultCategoryDataset = getMontherDataSet(searchCharByNeay);
 			// 创建柱状图,柱状图分水平显示和垂直显示两种
-			JFreeChart chart = ChartFactory.createBarChart( year + month+"财务报表统计", 
-				loadTitle	, "单位(RMB/元)",
+			JFreeChart chart = ChartFactory.createBarChart(year + month + "财务报表统计", loadTitle, "单位(RMB/元)",
 					defaultCategoryDataset, PlotOrientation.VERTICAL, true, true, true);
 			Font FONT_20 = new Font("宋体", Font.BOLD, 20);
 			Font FONT_80 = new Font("黑体", Font.BOLD, 80);
@@ -139,7 +132,7 @@ public class BarChartController {
 			chart.setBackgroundPaint(ChartColor.WHITE);
 			// 设置整个图片的标题字体
 			chart.getTitle().setFont(FONT_50);
-			
+
 			chart.getLegend().setItemFont(FONT_50);
 			// 得到绘图区
 			CategoryPlot plot = (CategoryPlot) chart.getPlot();
@@ -164,9 +157,9 @@ public class BarChartController {
 			domainAxis.setTickLabelFont(FONT_80);// 设置坐标轴标尺值字体
 			domainAxis.setLowerMargin(0.01);// 左边距 边框距离
 			domainAxis.setUpperMargin(0.06);// 右边距 边框距离,防止最后边的一个数据靠近了坐标轴。
-			//domainAxis.setMaximumCategoryLabelLines(14);
-			//domainAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_45);
-			
+			// domainAxis.setMaximumCategoryLabelLines(14);
+			// domainAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_45);
+
 			// 在柱体的上面显示数据
 			BarRenderer custombarrenderer3d = new BarRenderer();
 			custombarrenderer3d.setBaseItemLabelPaint(Color.BLACK);// 数据字体的颜色
@@ -187,7 +180,7 @@ public class BarChartController {
 			plot.getRangeAxis().setLabelFont(FONT_50);
 			// 存储成图片
 			// 设置chart的背景图片
-			String backImage = SearchImageContentPath() + "monthackimage"+ month +".jpg";
+			String backImage = SearchImageContentPath() + "monthackimage" + month + ".jpg";
 			backImage = backImage.replace("月.", ".");
 			File backimageFile = new File(backImage);
 			if (backimageFile.exists()) {
@@ -201,20 +194,20 @@ public class BarChartController {
 			g2.setBackground(Color.WHITE);// 设置背景色
 			// g2.clearRect(0, 0, 111, 111);//通过使用当前绘图表面的背景色进行填充来清除指定的矩形。
 			g2.setPaint(Color.BLUE);// 设置画笔,设置Paint属性
-			
+
 			// 上传到本地
-			ImageIO.write(bi, "png", new File(SearchImageContentPath() +imageUploadName));
+			ImageIO.write(bi, "png", new File(SearchImageContentPath() + imageUploadName));
 			g2.dispose();
-			
+
 			// 上传到七牛云
-			UploadUtil.upload(SearchImageContentPath() +imageUploadName, imageUploadName);
-			
+			UploadUtil.upload(SearchImageContentPath() + imageUploadName, imageUploadName);
+
 			// 同步数据
 			String returnPath = returnChartPaht + imageUploadName;
-			chartPanelService.createMyMonthPanel(userid, returnPath, year,month);
+			chartPanelService.createMyMonthPanel(userid, returnPath, year, month);
 			Thread.sleep(2000);
 			// 删除本地文件
-			File delete = new File(SearchImageContentPath() +imageUploadName);
+			File delete = new File(SearchImageContentPath() + imageUploadName);
 			delete.delete();
 			return new Result(true, year + month + "财务报表生成成功");
 		} catch (Exception e) {
@@ -318,7 +311,7 @@ public class BarChartController {
 				return new Result(false, "登录超时,请重新登录");
 			}
 			Long userid = Long.valueOf(mychartpanel.getUserid());
-			
+
 			String yearString = mychartpanel.getYearstring();
 
 			if (!yearString.contains("年")) {
@@ -338,13 +331,11 @@ public class BarChartController {
 					outMonery += find.getMonery();
 				}
 			}
-			String loadTitle = "全年  累计收入金额:" + inMonery + " 累计支出 :" + outMonery
-					+" 净收入:" + (inMonery - outMonery);
-			
+			String loadTitle = "全年  累计收入金额:" + inMonery + " 累计支出 :" + outMonery + " 净收入:" + (inMonery - outMonery);
+
 			DefaultCategoryDataset defaultCategoryDataset = getDefaultCategoryDataset(searchCharByNeay);
 			// 创建柱状图,柱状图分水平显示和垂直显示两种
-			JFreeChart chart = ChartFactory.createBarChart( yearString+"度财务报表统计", 
-					loadTitle, "单位(RMB/元)",
+			JFreeChart chart = ChartFactory.createBarChart(yearString + "度财务报表统计", loadTitle, "单位(RMB/元)",
 					defaultCategoryDataset, PlotOrientation.VERTICAL, true, true, true);
 			Font FONT_20 = new Font("黑体", Font.BOLD, 20);
 			Font FONT_30 = new Font("宋体", Font.BOLD, 30);
@@ -353,7 +344,7 @@ public class BarChartController {
 			chart.setBackgroundPaint(ChartColor.WHITE);
 			// 设置整个图片的标题字体
 			chart.getTitle().setFont(FONT_50);
-			
+
 			chart.getLegend().setItemFont(FONT_50);
 			// 得到绘图区
 			CategoryPlot plot = (CategoryPlot) chart.getPlot();
@@ -382,13 +373,13 @@ public class BarChartController {
 			domainAxis.setUpperMargin(0.06);// 右边距 边框距离,防止最后边的一个数据靠近了坐标轴。
 			domainAxis.setMaximumCategoryLabelLines(14);
 			domainAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_45);
-			
+
 			// 在柱体的上面显示数据
 			BarRenderer custombarrenderer3d = new BarRenderer();
 			custombarrenderer3d.setBaseItemLabelPaint(Color.BLACK);// 数据字体的颜色
 			custombarrenderer3d.setMaximumBarWidth(5.0); // 设置柱子宽度custombarrenderer3d
 			custombarrenderer3d.setMinimumBarLength(3.5);
-			custombarrenderer3d.setDrawBarOutline(true); 
+			custombarrenderer3d.setDrawBarOutline(true);
 			custombarrenderer3d.setItemMargin(0.2);
 			custombarrenderer3d.setItemLabelAnchorOffset(5);
 			custombarrenderer3d.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
@@ -403,8 +394,8 @@ public class BarChartController {
 			plot.getDomainAxis().setTickLabelFont(FONT_20);
 			// 设置范围轴(纵轴)字体
 			plot.getRangeAxis().setLabelFont(FONT_50);
-			
-			plot.setForegroundAlpha(0.5f); 
+
+			plot.setForegroundAlpha(0.5f);
 			// 获取背景图片
 			String yearImageContentPath = SearchImageContentPath() + "yearbackimg.jpg";
 			File backImageFile = new File(yearImageContentPath);
@@ -412,8 +403,7 @@ public class BarChartController {
 				chart.setBackgroundImage(ImageIO.read(backImageFile));
 				plot.setBackgroundImage(ImageIO.read(backImageFile));
 			}
-			
-			
+
 			plot.setForegroundAlpha(1.0f);
 			String uploadImageName = IDUtils.getImageName();
 			BufferedImage bi = chart.createBufferedImage(2400, 1200, 2400, 1200, null);
@@ -421,15 +411,15 @@ public class BarChartController {
 			g2.setBackground(Color.WHITE);// 设置背景色
 			g2.setPaint(Color.BLUE);// 设置画笔,设置Paint属性
 			// 吧文件写入本地服务器
-			ImageIO.write(bi, "png", new File(SearchImageContentPath() +uploadImageName));
+			ImageIO.write(bi, "png", new File(SearchImageContentPath() + uploadImageName));
 			g2.dispose();
-			
+
 			// 上传到七牛云服务器
-			UploadUtil.upload(SearchImageContentPath() + uploadImageName ,uploadImageName );
+			UploadUtil.upload(SearchImageContentPath() + uploadImageName, uploadImageName);
 			String returnPath = returnChartPaht + uploadImageName;
 			chartPanelService.createMyChartPanel(userid, returnPath, yearString);
 			Thread.sleep(1000);
-			File delete = new File(SearchImageContentPath() +uploadImageName);
+			File delete = new File(SearchImageContentPath() + uploadImageName);
 			delete.delete();
 			return new Result(true, yearString + "财务报表生成成功");
 		} catch (Exception e) {
@@ -593,8 +583,7 @@ public class BarChartController {
 			plot.setForegroundAlpha(1.0f);
 			// ChartUtilities.saveChartAsJPEG(new File("d:/bar.jpg"), chart,
 			// 1200, 1200);
-			
-			
+
 			BufferedImage bi = chart.createBufferedImage(2400, 1200, 2400, 1200, null);
 			// BufferedImage bi = new BufferedImage(frame.getWidth(),
 			// frame.getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -602,7 +591,7 @@ public class BarChartController {
 			g2.setBackground(Color.WHITE);// 设置背景色
 			// g2.clearRect(0, 0, 111, 111);//通过使用当前绘图表面的背景色进行填充来清除指定的矩形。
 			g2.setPaint(Color.BLUE);// 设置画笔,设置Paint属性
-			//ImageIO.write(bi, "png", new File(chartPath + "ddd.png"));
+			// ImageIO.write(bi, "png", new File(chartPath + "ddd.png"));
 			g2.dispose();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -623,9 +612,7 @@ public class BarChartController {
 	 * 
 	 * chartPanelService.createMyChartPanel(userid , returnPath ,yearString);
 	 */
-	
-	
-	
+
 	public DefaultCategoryDataset getMontherDataSet(List<FinandetailCustomer> searchCharByNeay) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		List<CharModel> modelList = new ArrayList<>();
@@ -653,10 +640,10 @@ public class BarChartController {
 		modelList.add(new CharModel("31", "支出", 0));
 		modelList.add(new CharModel("31", "净收入", 0));
 
-
 		// 先得到一月的数据
 		for (FinandetailCustomer find : searchCharByNeay) {
-			//String month = DateUtil.DateToMonth("yyyy-MM-dd", find.getCreatetime());
+			// String month = DateUtil.DateToMonth("yyyy-MM-dd",
+			// find.getCreatetime());
 			int day = DateUtil.DateToOneDay("yyyy-MM-dd", find.getCreatetime());
 			// 这里计算收入总和
 			double inMonery = 0;
@@ -667,23 +654,17 @@ public class BarChartController {
 				outMonery = find.getMonery();
 			}
 			for (CharModel charData : modelList) {
-				
+
 				// 拿到当前的日期
-				int currentDate = Integer.parseInt( charData.getMonth() ) ;
-				
-				if (( 0+day )<currentDate 
-									&& currentDate <= (5+day) 
-									&& charData.getType().equals("收入")) {
+				int currentDate = Integer.parseInt(charData.getMonth());
+
+				if ((0 + day) < currentDate && currentDate <= (5 + day) && charData.getType().equals("收入")) {
 					charData.setTotal(inMonery + charData.getTotal());
 				}
-				if (( 0+day )<currentDate 
-						&& currentDate <= (5+day) 
-						&& charData.getType().equals("支出")) {
+				if ((0 + day) < currentDate && currentDate <= (5 + day) && charData.getType().equals("支出")) {
 					charData.setTotal(outMonery + charData.getTotal());
 				}
-				if (( 0+day )<currentDate 
-						&& currentDate <= (5+day) 
-						&& charData.getType().equals("净收入")) {
+				if ((0 + day) < currentDate && currentDate <= (5 + day) && charData.getType().equals("净收入")) {
 					charData.setTotal(inMonery - outMonery + charData.getTotal());
 				}
 
@@ -698,12 +679,12 @@ public class BarChartController {
 
 		return dataset;
 	}
-	
-	/**获取图片路径**/
-	public String SearchImageContentPath () {
-		String contentPath =  request.getSession().getServletContext().getRealPath("/img");
+
+	/** 获取图片路径 **/
+	public String SearchImageContentPath() {
+		String contentPath = request.getSession().getServletContext().getRealPath("/img");
 		contentPath = contentPath.replace("\\", "/");
-		return contentPath+"/";
+		return contentPath + "/";
 	}
 
 }
