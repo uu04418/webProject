@@ -64,14 +64,14 @@ public class FinancialServiceImpl implements FinancialService {
 				|| CheckDataUtil.checkisEmpty(financial.getFatherid())
 				|| CheckDataUtil.checkisEmpty(financial.getType()))
 			return new Result(false, "输入必须的数据");
-		
-	
+		String financialid = userCustomerMapper.getNextFinancialid();
+		financial.setFinancialid(financialid);
 		financialMapper.insertSelective(financial);
 		return new Result(false, "插入成功");
 	}
 
 	@Override
-	public Financial findOne(Long id) {
+	public Financial findOne(String id) {
 		return financialMapper.selectByPrimaryKey(id);
 	}
 
@@ -88,68 +88,31 @@ public class FinancialServiceImpl implements FinancialService {
 		PageQuery pagequery = new PageQuery();
 		pagequery.setPageParams(infoCount, rows, page);
 		List<FinandetailCustomer> searchFinandetail = userCustomerMapper.SearchFinandetail(search, pagequery);
-		
-		if (CheckDataUtil.checkNotEmpty(searchFinandetail)) {
-			
-			for (FinandetailCustomer fin : searchFinandetail) {
-				
-				fin.setFormDate( DateUtil.DateToStr("yyyy-MM-dd", fin.getCreatetime()) );
-			}
-			
-		}
-		
 		return new PageResult(Long.valueOf(infoCount) ,searchFinandetail);
 	}
 
 	@Override
 	public Result add(Finandetail financial) {
-		// TODO Auto-generated method stub
-		try {
-			if (CheckDataUtil.checkNotEmpty(financial.getMytime())) {
-				Date strToDate = DateUtil.strToDate("yyyy-MM-dd", financial.getMytime());
-				if (CheckDataUtil.checkisEmpty(strToDate)) {
-					return new Result(false, "时间格式错误");
-				}
-				financial.setCreatetime(strToDate);
-			}else {
-				financial.setCreatetime(new Date());
-			}
 			finandetailMapper.insertSelective(financial);
 			return new Result(true, "新增成功");
-		} catch (Exception e) {
-			return new Result(false, "新增失败");
-		}
 		
 	}
 	
 	@Override
 	public Result update(Finandetail financial) {
-		// TODO Auto-generated method stub
-		try {
-			
-			if (CheckDataUtil.checkNotEmpty(financial.getMytime())) {
-				Date strToDate = DateUtil.strToDate("yyyy-MM-dd", financial.getMytime());
-				if (CheckDataUtil.checkisEmpty(strToDate)) {
-					return new Result(false, "时间格式错误");
-				}
-				financial.setCreatetime(strToDate);
-			}
 			finandetailMapper.updateByPrimaryKeySelective(financial);
 			return new Result(true, "编辑成功");
-		} catch (Exception e) {
-			return new Result(false, "编辑失败");
-		}
 		
 	}
 
 	@Override
-	public Finandetail oneDetail(Long finandetailid) {
+	public Finandetail oneDetail(String finandetailid) {
 		// TODO Auto-generated method stub
 		return  finandetailMapper.selectByPrimaryKey(finandetailid);
 	}
 
 	@Override
-	public Result updateDetailDelete(Long[] ids) {
+	public Result updateDetailDelete(String[] ids) {
 		
 		try {
 			for (int i = 0;i<ids.length;i++) {
@@ -165,7 +128,7 @@ public class FinancialServiceImpl implements FinancialService {
 	}
 
 	@Override
-	public Result deleteDetail(Long id) {
+	public Result deleteDetail(String id) {
 		// TODO Auto-generated method stub
 		finandetailMapper.deleteByPrimaryKey(id);
 		return null;

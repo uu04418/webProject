@@ -115,52 +115,62 @@ public class FinandetailExample {
             return (Criteria) this;
         }
 
-        public Criteria andFinandetailidEqualTo(Long value) {
+        public Criteria andFinandetailidEqualTo(String value) {
             addCriterion("finandetailid =", value, "finandetailid");
             return (Criteria) this;
         }
 
-        public Criteria andFinandetailidNotEqualTo(Long value) {
+        public Criteria andFinandetailidNotEqualTo(String value) {
             addCriterion("finandetailid <>", value, "finandetailid");
             return (Criteria) this;
         }
 
-        public Criteria andFinandetailidGreaterThan(Long value) {
+        public Criteria andFinandetailidGreaterThan(String value) {
             addCriterion("finandetailid >", value, "finandetailid");
             return (Criteria) this;
         }
 
-        public Criteria andFinandetailidGreaterThanOrEqualTo(Long value) {
+        public Criteria andFinandetailidGreaterThanOrEqualTo(String value) {
             addCriterion("finandetailid >=", value, "finandetailid");
             return (Criteria) this;
         }
 
-        public Criteria andFinandetailidLessThan(Long value) {
+        public Criteria andFinandetailidLessThan(String value) {
             addCriterion("finandetailid <", value, "finandetailid");
             return (Criteria) this;
         }
 
-        public Criteria andFinandetailidLessThanOrEqualTo(Long value) {
+        public Criteria andFinandetailidLessThanOrEqualTo(String value) {
             addCriterion("finandetailid <=", value, "finandetailid");
             return (Criteria) this;
         }
 
-        public Criteria andFinandetailidIn(List<Long> values) {
+        public Criteria andFinandetailidLike(String value) {
+            addCriterion("finandetailid like", value, "finandetailid");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinandetailidNotLike(String value) {
+            addCriterion("finandetailid not like", value, "finandetailid");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinandetailidIn(List<String> values) {
             addCriterion("finandetailid in", values, "finandetailid");
             return (Criteria) this;
         }
 
-        public Criteria andFinandetailidNotIn(List<Long> values) {
+        public Criteria andFinandetailidNotIn(List<String> values) {
             addCriterion("finandetailid not in", values, "finandetailid");
             return (Criteria) this;
         }
 
-        public Criteria andFinandetailidBetween(Long value1, Long value2) {
+        public Criteria andFinandetailidBetween(String value1, String value2) {
             addCriterion("finandetailid between", value1, value2, "finandetailid");
             return (Criteria) this;
         }
 
-        public Criteria andFinandetailidNotBetween(Long value1, Long value2) {
+        public Criteria andFinandetailidNotBetween(String value1, String value2) {
             addCriterion("finandetailid not between", value1, value2, "finandetailid");
             return (Criteria) this;
         }
@@ -175,52 +185,62 @@ public class FinandetailExample {
             return (Criteria) this;
         }
 
-        public Criteria andUseridEqualTo(Long value) {
+        public Criteria andUseridEqualTo(String value) {
             addCriterion("userid =", value, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridNotEqualTo(Long value) {
+        public Criteria andUseridNotEqualTo(String value) {
             addCriterion("userid <>", value, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridGreaterThan(Long value) {
+        public Criteria andUseridGreaterThan(String value) {
             addCriterion("userid >", value, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridGreaterThanOrEqualTo(Long value) {
+        public Criteria andUseridGreaterThanOrEqualTo(String value) {
             addCriterion("userid >=", value, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridLessThan(Long value) {
+        public Criteria andUseridLessThan(String value) {
             addCriterion("userid <", value, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridLessThanOrEqualTo(Long value) {
+        public Criteria andUseridLessThanOrEqualTo(String value) {
             addCriterion("userid <=", value, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridIn(List<Long> values) {
+        public Criteria andUseridLike(String value) {
+            addCriterion("userid like", value, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridNotLike(String value) {
+            addCriterion("userid not like", value, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridIn(List<String> values) {
             addCriterion("userid in", values, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridNotIn(List<Long> values) {
+        public Criteria andUseridNotIn(List<String> values) {
             addCriterion("userid not in", values, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridBetween(Long value1, Long value2) {
+        public Criteria andUseridBetween(String value1, String value2) {
             addCriterion("userid between", value1, value2, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridNotBetween(Long value1, Long value2) {
+        public Criteria andUseridNotBetween(String value1, String value2) {
             addCriterion("userid not between", value1, value2, "userid");
             return (Criteria) this;
         }
@@ -235,52 +255,62 @@ public class FinandetailExample {
             return (Criteria) this;
         }
 
-        public Criteria andFinancialidEqualTo(Long value) {
+        public Criteria andFinancialidEqualTo(String value) {
             addCriterion("financialid =", value, "financialid");
             return (Criteria) this;
         }
 
-        public Criteria andFinancialidNotEqualTo(Long value) {
+        public Criteria andFinancialidNotEqualTo(String value) {
             addCriterion("financialid <>", value, "financialid");
             return (Criteria) this;
         }
 
-        public Criteria andFinancialidGreaterThan(Long value) {
+        public Criteria andFinancialidGreaterThan(String value) {
             addCriterion("financialid >", value, "financialid");
             return (Criteria) this;
         }
 
-        public Criteria andFinancialidGreaterThanOrEqualTo(Long value) {
+        public Criteria andFinancialidGreaterThanOrEqualTo(String value) {
             addCriterion("financialid >=", value, "financialid");
             return (Criteria) this;
         }
 
-        public Criteria andFinancialidLessThan(Long value) {
+        public Criteria andFinancialidLessThan(String value) {
             addCriterion("financialid <", value, "financialid");
             return (Criteria) this;
         }
 
-        public Criteria andFinancialidLessThanOrEqualTo(Long value) {
+        public Criteria andFinancialidLessThanOrEqualTo(String value) {
             addCriterion("financialid <=", value, "financialid");
             return (Criteria) this;
         }
 
-        public Criteria andFinancialidIn(List<Long> values) {
+        public Criteria andFinancialidLike(String value) {
+            addCriterion("financialid like", value, "financialid");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinancialidNotLike(String value) {
+            addCriterion("financialid not like", value, "financialid");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinancialidIn(List<String> values) {
             addCriterion("financialid in", values, "financialid");
             return (Criteria) this;
         }
 
-        public Criteria andFinancialidNotIn(List<Long> values) {
+        public Criteria andFinancialidNotIn(List<String> values) {
             addCriterion("financialid not in", values, "financialid");
             return (Criteria) this;
         }
 
-        public Criteria andFinancialidBetween(Long value1, Long value2) {
+        public Criteria andFinancialidBetween(String value1, String value2) {
             addCriterion("financialid between", value1, value2, "financialid");
             return (Criteria) this;
         }
 
-        public Criteria andFinancialidNotBetween(Long value1, Long value2) {
+        public Criteria andFinancialidNotBetween(String value1, String value2) {
             addCriterion("financialid not between", value1, value2, "financialid");
             return (Criteria) this;
         }
@@ -532,6 +562,76 @@ public class FinandetailExample {
 
         public Criteria andStateNotBetween(Integer value1, Integer value2) {
             addCriterion("state not between", value1, value2, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayexpertidIsNull() {
+            addCriterion("payexpertid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayexpertidIsNotNull() {
+            addCriterion("payexpertid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayexpertidEqualTo(String value) {
+            addCriterion("payexpertid =", value, "payexpertid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayexpertidNotEqualTo(String value) {
+            addCriterion("payexpertid <>", value, "payexpertid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayexpertidGreaterThan(String value) {
+            addCriterion("payexpertid >", value, "payexpertid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayexpertidGreaterThanOrEqualTo(String value) {
+            addCriterion("payexpertid >=", value, "payexpertid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayexpertidLessThan(String value) {
+            addCriterion("payexpertid <", value, "payexpertid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayexpertidLessThanOrEqualTo(String value) {
+            addCriterion("payexpertid <=", value, "payexpertid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayexpertidLike(String value) {
+            addCriterion("payexpertid like", value, "payexpertid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayexpertidNotLike(String value) {
+            addCriterion("payexpertid not like", value, "payexpertid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayexpertidIn(List<String> values) {
+            addCriterion("payexpertid in", values, "payexpertid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayexpertidNotIn(List<String> values) {
+            addCriterion("payexpertid not in", values, "payexpertid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayexpertidBetween(String value1, String value2) {
+            addCriterion("payexpertid between", value1, value2, "payexpertid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayexpertidNotBetween(String value1, String value2) {
+            addCriterion("payexpertid not between", value1, value2, "payexpertid");
             return (Criteria) this;
         }
     }

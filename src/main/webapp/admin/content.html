@@ -21,17 +21,20 @@
     
     <script type="text/javascript" src="../js/base_pagination.js">  </script>
     <script type="text/javascript" src="../js/service/contentService.js">  </script>
+    <script type="text/javascript" src="../js/service/buildingService.js">  </script>
     <script type="text/javascript" src="../js/service/loginService.js">  </script>
     <script type="text/javascript" src="../js/service/financialService.js">  </script>
     <script type="text/javascript" src="../js/controller/baseController.js">  </script>
     <script type="text/javascript" src="../js/controller/contentController.js">  </script>
     
 </head>
-<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="contentController"
-ng-init="finanList()" >
+<body class="hold-transition skin-red sidebar-mini" 
+ng-init="buildingList()"
+ng-app="pinyougou" ng-controller="contentController"
+ >
   <!-- .box-body -->
                     <div class="box-header with-border">
-                        <h3 class="box-title">管理</h3>
+                        <h3 class="box-title">财务收支明细</h3>
                     </div>
 
                     <div class="box-body">
@@ -44,8 +47,32 @@ ng-init="finanList()" >
                                 <div class="form-group form-inline">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" ng-click="entity={}"><i class="fa fa-file-o"></i> 新建</button>
-                                        <button type="button" class="btn btn-default" title="删除" ng-click="dele()"><i class="fa fa-trash-o"></i> 删除</button>           
-                                        <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
+                                        <button 
+                                         style="margin-right:2rem;"
+                                        type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
+                                    	
+                                    	 <tr>
+											<td>选择楼栋</td>
+						                    <td>
+							                     <select class="form-control select-sm"  id="myselectTypeStatus"
+							                     ng-model="searchEntity.buildingid"  
+							                     ng-options="item.id as item.name for item in buildingList" >															
+									             </select>
+						                    </td> 
+						                 </tr>	
+						                 
+						                 
+						                  <tr>
+											<td>选择房号</td>
+						                    <td>
+							                     <select class="form-control select-sm"  id="myselectTypeStatus"
+							                     ng-model="searchEntity.houseid"  
+							                     ng-options="item.houseid as item.name for item in searchHouseList" >															
+									             </select>
+						                    </td> 
+						                 </tr>	
+                                    
+                                    
                                     </div>
                                 </div>
                             </div>
@@ -59,11 +86,11 @@ ng-init="finanList()" >
 			                  <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
 			                      <thead>
 			                          <tr>
-			                              <th class="" style="padding-right:0px ">
-			                                  <input id="selall" type="checkbox" class="icheckbox_square-blue">
-			                              </th> 
+			                 <th class="sorting">楼栋</th>
+			                 <th class="sorting">房号</th>
+			                 <th class="sorting">分期编号</th>				
                              <th class="sorting">财务类型</th>			
-                             <th class="sorting">财务标题</th>			
+                             <th class="sorting">财务描述</th>			
                              <th class="sorting">小计金额</th>			
                              <th class="sorting">统计时间</th>			
                              <th class="sorting">状态</th>	
@@ -73,15 +100,16 @@ ng-init="finanList()" >
 			                      </thead>
 			                      <tbody>
 			                          <tr ng-repeat="entity in list">
-			                              <td><input  type="checkbox" ng-click="updateSelection($event,entity.finandetailid)"></td>			                              
-                            <td>{{typestatus[entity.fatherid]}}</td>	
-                             <td>{{entity.categoryname}}</td>			
-                             <td>{{entity.monery}}</td>			
+                             <td>{{entity.buildingname}}</td>
+                             <td>{{entity.housename}}</td>		
+                             <td>{{entity.payexpertname}}</td>			
+                             <td>{{entity.categoryname}}【{{typestatus[entity.type]}}】</td>			
                              <td>
-                             	{{entity.formDate}}
+                             	{{entity.descname}}
                              </td>			
-                             <td>{{state[entity.state]}}</td>			
-		                                 
+                             <td>{{entity.monery}}</td>	
+                             <td>{{formateDate(entity.createtime ) }}</td>		
+		                      <td>{{stateList[entity.state]}}</td>		            
                                <td class="text-center">                                           
                               	   <button  type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" ng-click="findOne(entity.finandetailid)" >修改</button>   
                               	                        

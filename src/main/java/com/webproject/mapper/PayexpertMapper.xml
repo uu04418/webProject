@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.webproject.mapper.PayexpertMapper" >
+  <resultMap id="BaseResultMap" type="com.webproject.entity.Payexpert" >
+    <id column="payexpertid" property="payexpertid" jdbcType="VARCHAR" />
+    <result column="houseid" property="houseid" jdbcType="VARCHAR" />
+    <result column="payexpertname" property="payexpertname" jdbcType="VARCHAR" />
+    <result column="start_time" property="start_time" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="end_time" jdbcType="TIMESTAMP" />
+    <result column="realmonery" property="realmonery" jdbcType="DOUBLE" />
+    <result column="waterstart" property="waterstart" jdbcType="DOUBLE" />
+    <result column="waterend" property="waterend" jdbcType="DOUBLE" />
+    <result column="lightstart" property="lightstart" jdbcType="DOUBLE" />
+    <result column="lightend" property="lightend" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    payexpertid, houseid, payexpertname, start_time, end_time, realmonery, waterstart, 
+    waterend, lightstart, lightend
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.webproject.entity.PayexpertExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from payexpert
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from payexpert
+    where payexpertid = #{payexpertid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from payexpert
+    where payexpertid = #{payexpertid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.webproject.entity.PayexpertExample" >
+    delete from payexpert
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.webproject.entity.Payexpert" >
+    insert into payexpert (payexpertid, houseid, payexpertname, 
+      start_time, end_time, realmonery, 
+      waterstart, waterend, lightstart, 
+      lightend)
+    values (#{payexpertid,jdbcType=VARCHAR}, #{houseid,jdbcType=VARCHAR}, #{payexpertname,jdbcType=VARCHAR}, 
+      #{start_time,jdbcType=TIMESTAMP}, #{end_time,jdbcType=TIMESTAMP}, #{realmonery,jdbcType=DOUBLE}, 
+      #{waterstart,jdbcType=DOUBLE}, #{waterend,jdbcType=DOUBLE}, #{lightstart,jdbcType=DOUBLE}, 
+      #{lightend,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.webproject.entity.Payexpert" >
+    insert into payexpert
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="payexpertid != null" >
+        payexpertid,
+      </if>
+      <if test="houseid != null" >
+        houseid,
+      </if>
+      <if test="payexpertname != null" >
+        payexpertname,
+      </if>
+      <if test="start_time != null" >
+        start_time,
+      </if>
+      <if test="end_time != null" >
+        end_time,
+      </if>
+      <if test="realmonery != null" >
+        realmonery,
+      </if>
+      <if test="waterstart != null" >
+        waterstart,
+      </if>
+      <if test="waterend != null" >
+        waterend,
+      </if>
+      <if test="lightstart != null" >
+        lightstart,
+      </if>
+      <if test="lightend != null" >
+        lightend,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="payexpertid != null" >
+        #{payexpertid,jdbcType=VARCHAR},
+      </if>
+      <if test="houseid != null" >
+        #{houseid,jdbcType=VARCHAR},
+      </if>
+      <if test="payexpertname != null" >
+        #{payexpertname,jdbcType=VARCHAR},
+      </if>
+      <if test="start_time != null" >
+        #{start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="end_time != null" >
+        #{end_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="realmonery != null" >
+        #{realmonery,jdbcType=DOUBLE},
+      </if>
+      <if test="waterstart != null" >
+        #{waterstart,jdbcType=DOUBLE},
+      </if>
+      <if test="waterend != null" >
+        #{waterend,jdbcType=DOUBLE},
+      </if>
+      <if test="lightstart != null" >
+        #{lightstart,jdbcType=DOUBLE},
+      </if>
+      <if test="lightend != null" >
+        #{lightend,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.webproject.entity.PayexpertExample" resultType="java.lang.Integer" >
+    select count(*) from payexpert
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update payexpert
+    <set >
+      <if test="record.payexpertid != null" >
+        payexpertid = #{record.payexpertid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.houseid != null" >
+        houseid = #{record.houseid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payexpertname != null" >
+        payexpertname = #{record.payexpertname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.start_time != null" >
+        start_time = #{record.start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.end_time != null" >
+        end_time = #{record.end_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.realmonery != null" >
+        realmonery = #{record.realmonery,jdbcType=DOUBLE},
+      </if>
+      <if test="record.waterstart != null" >
+        waterstart = #{record.waterstart,jdbcType=DOUBLE},
+      </if>
+      <if test="record.waterend != null" >
+        waterend = #{record.waterend,jdbcType=DOUBLE},
+      </if>
+      <if test="record.lightstart != null" >
+        lightstart = #{record.lightstart,jdbcType=DOUBLE},
+      </if>
+      <if test="record.lightend != null" >
+        lightend = #{record.lightend,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update payexpert
+    set payexpertid = #{record.payexpertid,jdbcType=VARCHAR},
+      houseid = #{record.houseid,jdbcType=VARCHAR},
+      payexpertname = #{record.payexpertname,jdbcType=VARCHAR},
+      start_time = #{record.start_time,jdbcType=TIMESTAMP},
+      end_time = #{record.end_time,jdbcType=TIMESTAMP},
+      realmonery = #{record.realmonery,jdbcType=DOUBLE},
+      waterstart = #{record.waterstart,jdbcType=DOUBLE},
+      waterend = #{record.waterend,jdbcType=DOUBLE},
+      lightstart = #{record.lightstart,jdbcType=DOUBLE},
+      lightend = #{record.lightend,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.webproject.entity.Payexpert" >
+    update payexpert
+    <set >
+      <if test="houseid != null" >
+        houseid = #{houseid,jdbcType=VARCHAR},
+      </if>
+      <if test="payexpertname != null" >
+        payexpertname = #{payexpertname,jdbcType=VARCHAR},
+      </if>
+      <if test="start_time != null" >
+        start_time = #{start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="end_time != null" >
+        end_time = #{end_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="realmonery != null" >
+        realmonery = #{realmonery,jdbcType=DOUBLE},
+      </if>
+      <if test="waterstart != null" >
+        waterstart = #{waterstart,jdbcType=DOUBLE},
+      </if>
+      <if test="waterend != null" >
+        waterend = #{waterend,jdbcType=DOUBLE},
+      </if>
+      <if test="lightstart != null" >
+        lightstart = #{lightstart,jdbcType=DOUBLE},
+      </if>
+      <if test="lightend != null" >
+        lightend = #{lightend,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where payexpertid = #{payexpertid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.webproject.entity.Payexpert" >
+    update payexpert
+    set houseid = #{houseid,jdbcType=VARCHAR},
+      payexpertname = #{payexpertname,jdbcType=VARCHAR},
+      start_time = #{start_time,jdbcType=TIMESTAMP},
+      end_time = #{end_time,jdbcType=TIMESTAMP},
+      realmonery = #{realmonery,jdbcType=DOUBLE},
+      waterstart = #{waterstart,jdbcType=DOUBLE},
+      waterend = #{waterend,jdbcType=DOUBLE},
+      lightstart = #{lightstart,jdbcType=DOUBLE},
+      lightend = #{lightend,jdbcType=DOUBLE}
+    where payexpertid = #{payexpertid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -51,7 +51,7 @@ public class BackImageController {
 	
 	
 	@RequestMapping( "/upload/{id}")
-	public ResultMap videoUpload(MultipartFile file ,@PathVariable Long id ) {
+	public ResultMap videoUpload(MultipartFile file ,@PathVariable String id ) {
 		
 		try {
 			String imageName = backImageService.findImageName(id);
@@ -72,7 +72,7 @@ public class BackImageController {
 	
 	
 	@RequestMapping( "/deleteFile")
-	public ResultMap deleteFile(Long id ) {
+	public ResultMap deleteFile(String id ) {
 		
 		String imageName = backImageService.findImageName(id);
 		 File file = new File(SearchImageContentPath() + imageName);

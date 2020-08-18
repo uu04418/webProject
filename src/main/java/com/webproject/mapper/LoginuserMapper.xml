@@ -11,6 +11,7 @@
     <result column="state" property="state" jdbcType="INTEGER" />
     <result column="avatar" property="avatar" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="acctoken" property="acctoken" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    userid, username, password, telephone, registime, lastgoin, state, avatar, type
+    userid, username, password, telephone, registime, lastgoin, state, avatar, type, 
+    acctoken
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.webproject.entity.LoginuserExample" >
     select
@@ -106,12 +108,12 @@
   <insert id="insert" parameterType="com.webproject.entity.Loginuser" >
     insert into loginuser (userid, username, password, 
       telephone, registime, lastgoin, 
-      state, avatar, type
-      )
+      state, avatar, type, 
+      acctoken)
     values (#{userid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{telephone,jdbcType=VARCHAR}, #{registime,jdbcType=TIMESTAMP}, #{lastgoin,jdbcType=TIMESTAMP}, 
-      #{state,jdbcType=INTEGER}, #{avatar,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}
-      )
+      #{state,jdbcType=INTEGER}, #{avatar,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{acctoken,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.webproject.entity.Loginuser" >
     insert into loginuser
@@ -143,6 +145,9 @@
       <if test="type != null" >
         type,
       </if>
+      <if test="acctoken != null" >
+        acctoken,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userid != null" >
@@ -171,6 +176,9 @@
       </if>
       <if test="type != null" >
         #{type,jdbcType=INTEGER},
+      </if>
+      <if test="acctoken != null" >
+        #{acctoken,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -210,6 +218,9 @@
       <if test="record.type != null" >
         type = #{record.type,jdbcType=INTEGER},
       </if>
+      <if test="record.acctoken != null" >
+        acctoken = #{record.acctoken,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -225,7 +236,8 @@
       lastgoin = #{record.lastgoin,jdbcType=TIMESTAMP},
       state = #{record.state,jdbcType=INTEGER},
       avatar = #{record.avatar,jdbcType=VARCHAR},
-      type = #{record.type,jdbcType=INTEGER}
+      type = #{record.type,jdbcType=INTEGER},
+      acctoken = #{record.acctoken,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -257,6 +269,9 @@
       <if test="type != null" >
         type = #{type,jdbcType=INTEGER},
       </if>
+      <if test="acctoken != null" >
+        acctoken = #{acctoken,jdbcType=VARCHAR},
+      </if>
     </set>
     where userid = #{userid,jdbcType=VARCHAR}
   </update>
@@ -269,7 +284,8 @@
       lastgoin = #{lastgoin,jdbcType=TIMESTAMP},
       state = #{state,jdbcType=INTEGER},
       avatar = #{avatar,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER}
+      type = #{type,jdbcType=INTEGER},
+      acctoken = #{acctoken,jdbcType=VARCHAR}
     where userid = #{userid,jdbcType=VARCHAR}
   </update>
 </mapper>

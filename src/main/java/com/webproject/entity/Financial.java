@@ -2,10 +2,10 @@ package com.webproject.entity;
 
 public class Financial {
     /** */
-    private Long financialid;
+    private String financialid;
 
     /** */
-    private Long fatherid;
+    private String fatherid;
 
     /** 0-移除 1-正常 2-禁用*/
     private Integer type;
@@ -13,20 +13,20 @@ public class Financial {
     /** 类别名称*/
     private String categoryname;
 
-    public Long getFinancialid() {
+    public String getFinancialid() {
         return financialid;
     }
 
-    public void setFinancialid(Long financialid) {
-        this.financialid = financialid;
+    public void setFinancialid(String financialid) {
+        this.financialid = financialid == null ? null : financialid.trim();
     }
 
-    public Long getFatherid() {
+    public String getFatherid() {
         return fatherid;
     }
 
-    public void setFatherid(Long fatherid) {
-        this.fatherid = fatherid;
+    public void setFatherid(String fatherid) {
+        this.fatherid = fatherid == null ? null : fatherid.trim();
     }
 
     public Integer getType() {

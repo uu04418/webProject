@@ -5,7 +5,7 @@
     <!-- 页面meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>秋霞谍报后台管理系统</title>
+    <title>财务系统后台</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
     <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
@@ -43,7 +43,7 @@
 </head>
 
 <body class="hold-transition skin-green sidebar-mini" ng-controller="indexController"  
-ng-app="pinyougou" ng-init="getUserMessage()">
+ng-app="pinyougou"  ng-init="getLoginMess()">
 
     <div class="wrapper" >
 
@@ -52,9 +52,9 @@ ng-app="pinyougou" ng-init="getUserMessage()">
             <!-- Logo -->
             <a href="index.html" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b>秋霞</b></span>
+                <span class="logo-mini"><b>财务</b></span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b>  秋霞谍报系统</b>
+                <span class="logo-lg"><b>  财务系统后台</b>
                 </span>
             </a>
             <!-- Header Navbar: style can be found in header.less -->
@@ -73,9 +73,9 @@ ng-app="pinyougou" ng-init="getUserMessage()">
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="{{loginUser.avatar}}" class="user-image" alt="User Image">
-                                <span class="hidden-xs"> {{loginUser.username}}
-                                
+                                <img  src="{{loginUser.avatar}}" class="user-image" alt="User Image">
+                                <span class="hidden-xs"> {{loginUser.username}} 
+                                 
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
@@ -157,22 +157,35 @@ ng-app="pinyougou" ng-init="getUserMessage()">
 				        </a>
 				        <ul class="treeview-menu">
 						
+						
+							<li id="admin-login" >
+				                <a  href="building.html" target="iframe">
+				                    <i class="fa fa-circle-o"></i>楼栋管理
+				                </a>
+				            </li>
+				            
+				            
+				            <li id="admin-login" >
+				                <a  href="house.html" target="iframe">
+				                    <i class="fa fa-circle-o"></i>房源管理
+				                </a>
+				            </li>
+						
 				            <li id="admin-login" >
 				                <a  href="financial.html" target="iframe">
 				                    <i class="fa fa-circle-o"></i>财务类型
 				                </a>
 				            </li>
-				              <li id="admin-login">
+				            
+				            <li id="admin-login">
 				                <a href="backimage.html" target="iframe">
 				                    <i class="fa fa-circle-o"></i>报表背景
 				                </a>
 				            </li>
+				            
 				        </ul>                        
 				    </li>
 				    <!-- 菜单 /-->
-				    
-				    
-				    
 				     <li class="treeview"  ng-if ="loginUser.type < 2 ">
 				        <a href="#">
 				            <i class="fa fa-folder"></i> 
@@ -180,8 +193,55 @@ ng-app="pinyougou" ng-init="getUserMessage()">
 				            <span class="pull-right-container">
 				       			<i class="fa fa-angle-left pull-right"></i>
 				   		 	</span>
+				   		 	 <ul class="treeview-menu">
+						
+						
+							<li id="admin-login" >
+				                <a  href="user.html" target="iframe">
+				                    <i class="fa fa-circle-o"></i>用户列表
+				                </a>
+				            </li>
+				            
+				            
+						
+				            <li id="admin-login" >
+				                <a  href="payexpert.html" target="iframe">
+				                    <i class="fa fa-circle-o"></i>分期管理
+				                </a>
+				            </li>
+				            
+				            <li id="admin-login">
+				                <a href="backimage.html" target="iframe">
+				                    <i class="fa fa-circle-o"></i>报表背景
+				                </a>
+				            </li>
+				            
+				        </ul>                 
 				        </a>
-				                       
+				    </li>
+				    
+				    
+				       <li class="treeview"  ng-if ="loginUser.type < 2 ">
+				        <a href="#">
+				            <i class="fa fa-folder"></i> 
+				            <span>基础数据</span>
+				            <span class="pull-right-container">
+				       			<i class="fa fa-angle-left pull-right"></i>
+				   		 	</span>
+				   		 <ul class="treeview-menu">
+						
+							<li id="admin-login" >
+				                <a  href="building.html" target="iframe">
+				                    <i class="fa fa-circle-o"></i>楼栋管理
+				                </a>
+				            </li>
+				            <li id="admin-login" >
+				                <a  href="house.html" target="iframe">
+				                    <i class="fa fa-circle-o"></i>房源管理
+				                </a>
+				            </li>
+				        </ul>                 
+				        </a>
 				    </li>
                 </ul>
             </section>

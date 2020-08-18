@@ -2,9 +2,6 @@ package com.webproject.mapper;
 
 import com.webproject.entity.Financial;
 import com.webproject.entity.FinancialExample;
-import com.webproject.myentity.FinandetailCustomer;
-
-import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,7 +10,7 @@ public interface FinancialMapper {
 
     int deleteByExample(FinancialExample example);
 
-    int deleteByPrimaryKey(Long financialid);
+    int deleteByPrimaryKey(String financialid);
 
     int insert(Financial record);
 
@@ -21,7 +18,7 @@ public interface FinancialMapper {
 
     List<Financial> selectByExample(FinancialExample example);
 
-    Financial selectByPrimaryKey(Long financialid);
+    Financial selectByPrimaryKey(String financialid);
 
     int updateByExampleSelective(@Param("record") Financial record, @Param("example") FinancialExample example);
 
@@ -30,5 +27,4 @@ public interface FinancialMapper {
     int updateByPrimaryKeySelective(Financial record);
 
     int updateByPrimaryKey(Financial record);
-
 }

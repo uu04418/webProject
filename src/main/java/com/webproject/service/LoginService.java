@@ -17,6 +17,6 @@ public interface LoginService {
 
 	List<Loginuser> findAllUser();
 
-	Result getUserMessage(Long userid);
+	Result getUserMessage(String userid);
 
 }

@@ -4,13 +4,13 @@ import java.util.Date;
 
 public class Finandetail {
     /** 财务统计主键*/
-    private Long finandetailid;
+    private String finandetailid;
 
     /** 统计人id*/
-    private Long userid;
+    private String userid;
 
     /** 财务类型主键*/
-    private Long financialid;
+    private String financialid;
 
     /** 金额*/
     private Integer monery;
@@ -23,40 +23,32 @@ public class Finandetail {
 
     /** 0-正常 1-删除*/
     private Integer state;
-    
-    private String mytime ;
-    
 
-    public String getMytime() {
-		return mytime;
-	}
+    /** */
+    private String payexpertid;
 
-	public void setMytime(String mytime) {
-		this.mytime = mytime;
-	}
-
-	public Long getFinandetailid() {
+    public String getFinandetailid() {
         return finandetailid;
     }
 
-    public void setFinandetailid(Long finandetailid) {
-        this.finandetailid = finandetailid;
+    public void setFinandetailid(String finandetailid) {
+        this.finandetailid = finandetailid == null ? null : finandetailid.trim();
     }
 
-    public Long getUserid() {
+    public String getUserid() {
         return userid;
     }
 
-    public void setUserid(Long userid) {
-        this.userid = userid;
+    public void setUserid(String userid) {
+        this.userid = userid == null ? null : userid.trim();
     }
 
-    public Long getFinancialid() {
+    public String getFinancialid() {
         return financialid;
     }
 
-    public void setFinancialid(Long financialid) {
-        this.financialid = financialid;
+    public void setFinancialid(String financialid) {
+        this.financialid = financialid == null ? null : financialid.trim();
     }
 
     public Integer getMonery() {
@@ -89,5 +81,13 @@ public class Finandetail {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getPayexpertid() {
+        return payexpertid;
+    }
+
+    public void setPayexpertid(String payexpertid) {
+        this.payexpertid = payexpertid == null ? null : payexpertid.trim();
     }
 }

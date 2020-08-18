@@ -23,8 +23,6 @@ public class FinancialController {
 
 	@Autowired
 	private FinancialService financialService;
-	@Autowired
-	private HttpServletRequest request;
 
 	@RequestMapping("/belogin/searchList")
 	public PageResult searchList(int page, int rows, @RequestBody Financial financial) {
@@ -39,13 +37,13 @@ public class FinancialController {
 	}
 
 	@RequestMapping("/belogin/deleteDetail")
-	public Result deleteDetail(Long id) {
+	public Result deleteDetail(String id) {
 		return financialService.deleteDetail(id);
 
 	}
 
 	@RequestMapping("/belogin/findOne")
-	public Financial findOne(Long id) {
+	public Financial findOne(String id) {
 		return financialService.findOne(id);
 
 	}
@@ -86,13 +84,13 @@ public class FinancialController {
 	}
 
 	@RequestMapping("/belogin/oneDetail")
-	public Finandetail oneDetail(Long id) {
+	public Finandetail oneDetail(String id) {
 		return financialService.oneDetail(id);
 
 	}
 
 	@RequestMapping("/belogin/updateDetailDelete")
-	public Result updateDetailDelete(Long[] ids) {
+	public Result updateDetailDelete(String[] ids) {
 		return financialService.updateDetailDelete(ids);
 
 	}

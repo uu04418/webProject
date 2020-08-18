@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.webproject.mapper.FinancialMapper" >
   <resultMap id="BaseResultMap" type="com.webproject.entity.Financial" >
-    <id column="financialid" property="financialid" jdbcType="BIGINT" />
-    <result column="fatherid" property="fatherid" jdbcType="BIGINT" />
+    <id column="financialid" property="financialid" jdbcType="VARCHAR" />
+    <result column="fatherid" property="fatherid" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="categoryname" property="categoryname" jdbcType="VARCHAR" />
   </resultMap>
@@ -82,15 +82,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from financial
-    where financialid = #{financialid,jdbcType=BIGINT}
+    where financialid = #{financialid,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from financial
-    where financialid = #{financialid,jdbcType=BIGINT}
+    where financialid = #{financialid,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.webproject.entity.FinancialExample" >
     delete from financial
@@ -101,7 +101,7 @@
   <insert id="insert" parameterType="com.webproject.entity.Financial" >
     insert into financial (financialid, fatherid, type, 
       categoryname)
-    values (#{financialid,jdbcType=BIGINT}, #{fatherid,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
+    values (#{financialid,jdbcType=VARCHAR}, #{fatherid,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
       #{categoryname,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.webproject.entity.Financial" >
@@ -122,10 +122,10 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="financialid != null" >
-        #{financialid,jdbcType=BIGINT},
+        #{financialid,jdbcType=VARCHAR},
       </if>
       <if test="fatherid != null" >
-        #{fatherid,jdbcType=BIGINT},
+        #{fatherid,jdbcType=VARCHAR},
       </if>
       <if test="type != null" >
         #{type,jdbcType=INTEGER},
@@ -145,10 +145,10 @@
     update financial
     <set >
       <if test="record.financialid != null" >
-        financialid = #{record.financialid,jdbcType=BIGINT},
+        financialid = #{record.financialid,jdbcType=VARCHAR},
       </if>
       <if test="record.fatherid != null" >
-        fatherid = #{record.fatherid,jdbcType=BIGINT},
+        fatherid = #{record.fatherid,jdbcType=VARCHAR},
       </if>
       <if test="record.type != null" >
         type = #{record.type,jdbcType=INTEGER},
@@ -163,8 +163,8 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update financial
-    set financialid = #{record.financialid,jdbcType=BIGINT},
-      fatherid = #{record.fatherid,jdbcType=BIGINT},
+    set financialid = #{record.financialid,jdbcType=VARCHAR},
+      fatherid = #{record.fatherid,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=INTEGER},
       categoryname = #{record.categoryname,jdbcType=VARCHAR}
     <if test="_parameter != null" >
@@ -175,7 +175,7 @@
     update financial
     <set >
       <if test="fatherid != null" >
-        fatherid = #{fatherid,jdbcType=BIGINT},
+        fatherid = #{fatherid,jdbcType=VARCHAR},
       </if>
       <if test="type != null" >
         type = #{type,jdbcType=INTEGER},
@@ -184,13 +184,13 @@
         categoryname = #{categoryname,jdbcType=VARCHAR},
       </if>
     </set>
-    where financialid = #{financialid,jdbcType=BIGINT}
+    where financialid = #{financialid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.webproject.entity.Financial" >
     update financial
-    set fatherid = #{fatherid,jdbcType=BIGINT},
+    set fatherid = #{fatherid,jdbcType=VARCHAR},
       type = #{type,jdbcType=INTEGER},
       categoryname = #{categoryname,jdbcType=VARCHAR}
-    where financialid = #{financialid,jdbcType=BIGINT}
+    where financialid = #{financialid,jdbcType=VARCHAR}
   </update>
 </mapper>

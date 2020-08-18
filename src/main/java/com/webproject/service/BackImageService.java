@@ -9,6 +9,6 @@ public interface BackImageService {
 	
 	public List<Backimageurl> searchList() ;
 
-	public String findImageName(Long id);
+	public String findImageName(String id);
 
 }

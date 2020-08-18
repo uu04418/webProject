@@ -10,7 +10,7 @@ public interface FinandetailMapper {
 
     int deleteByExample(FinandetailExample example);
 
-    int deleteByPrimaryKey(Long finandetailid);
+    int deleteByPrimaryKey(String finandetailid);
 
     int insert(Finandetail record);
 
@@ -18,7 +18,7 @@ public interface FinandetailMapper {
 
     List<Finandetail> selectByExample(FinandetailExample example);
 
-    Finandetail selectByPrimaryKey(Long finandetailid);
+    Finandetail selectByPrimaryKey(String finandetailid);
 
     int updateByExampleSelective(@Param("record") Finandetail record, @Param("example") FinandetailExample example);
 

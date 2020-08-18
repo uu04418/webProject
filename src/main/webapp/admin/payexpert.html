@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>管理</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js">  </script>
+    <!-- 分页组件开始 -->
+	<script src="../plugins/angularjs/pagination.js"></script>
+	<link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+	<!-- 分页组件结束 -->
+    
+    
+    <script type="text/javascript" src="../js/base_pagination.js">  </script>
+    <script type="text/javascript" src="../js/service/payexpertService.js">  </script>
+    <script type="text/javascript" src="../js/service/buildingService.js">  </script>
+    <script type="text/javascript" src="../js/controller/baseController.js">  </script>
+    <script type="text/javascript" src="../js/controller/payexpertController.js">  </script>
+    
+</head>
+<body class="hold-transition skin-red sidebar-mini" 
+
+ng-init = "buildingList()"
+ng-app="pinyougou" ng-controller="payexpertController" >
+  <!-- .box-body -->
+                    <div class="box-header with-border">
+                        <h3 class="box-title">分期管理</h3>
+                    </div>
+
+                    <div class="box-body">
+
+                        <!-- 数据表格 -->
+                        <div class="table-box">
+
+                            <!--工具栏-->
+                            <div class="pull-left">
+                                <div class="form-group form-inline">
+                                    <div class="btn-group">
+                                    	
+                                    	 <tr>
+											<td>选择楼栋</td>
+						                    <td>
+							                     <select class="form-control select-sm"  id="myselectTypeStatus"
+							                     ng-model="searchEntity.buildingid"  
+							                     ng-options="item.id as item.name for item in buildingList" >															
+									             </select>
+						                    </td> 
+						                 </tr>	
+						                 
+						                 
+						                  <tr>
+											<td>选择房号</td>
+						                    <td>
+							                     <select class="form-control select-sm"  id="myselectTypeStatus"
+							                     ng-model="searchEntity.houseid"  
+							                     ng-options="item.houseid as item.name for item in searchHouseList" >															
+									             </select>
+						                    </td> 
+						                 </tr>	
+                                    
+                                    
+                                        <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" ng-click="entity={}"><i class="fa fa-file-o"></i> 新建</button>
+                                        <button type="button" 
+                                        style="margin-right:2rem;"
+                                        class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-tools pull-right">
+                                <div class="has-feedback">							       
+                                </div>
+                            </div>
+                            <!--工具栏/-->
+
+			                  <!--数据列表-->
+			                  <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+			                     
+			                      <thead>
+			                          <tr>
+										 <th class="sorting">楼栋名称</th>	
+										 <th class="sorting">房号名称</th>			
+                             			 <th class="sorting">水初 /水末</th>
+                             			 <th class="sorting">电初/电末</th>
+                             			 <th class="sorting">期数</th>		
+                             			 <th class="sorting">租约日期</th>					
+								     	 <th class="sorting">实收</th>		
+					                     <th class="text-center">操作</th>
+			                          </tr>
+			                      </thead>
+			                      
+			                      <tbody>
+			                          <tr ng-repeat="entity in list">
+				                            <td>{{entity.buildingname}}</td>	
+                             				<td>{{entity.housename}}</td>	
+                             				<td>{{entity.waterstart}}/{{entity.waterend}}</td>
+                             				<td>{{entity.lightstart}}/{{entity.lightend}}</td>	
+                             				<td>{{entity.payexpertname}}</td>	
+                             				<td>{{formateDate(entity.start_time)}}/{{formateDate(entity.end_time)}}</td>
+                             				<td>{{entity.realmonery}}</td>				
+		                                  <td class="text-center">                                           
+		                                 	   <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#delcfmModel" ng-click="deleteOne(entity.payexpertid)" >删除</button>                                                                             
+		                                  </td>
+			                          </tr>									 
+			                      </tbody>
+			                  </table>
+			                  <!--数据列表/-->                        
+                        </div>
+                        <!-- 数据表格 /-->
+                        <!-- 分页 -->
+						<tm-pagination conf="paginationConf"></tm-pagination>
+                     </div>
+                    <!-- /.box-body -->
+         
+<div class="modal fade" id="delcfmModel">
+    <div class="modal-dialog">
+        <div class="modal-content message_align">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title">确认信息</h4>
+            </div>
+            <div class="modal-body">
+                <p id="delcfmMsg">您确认要删除吗？</p>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="submitUrl"/>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <a ng-click="suredeleteOne()"  class="btn btn-success" data-dismiss="modal">确定</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 编辑窗口 -->
+<div class="modal fade" id="editModal"  
+ role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog"  style="width: 98%;margin-top: -100px;">
+	<div class="modal-content" >
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="myModalLabel">创建分期</h3>
+			<span style="color:red;">以租约截至时间生成对应EXCLE.租约每个月只能生成一份。</span>
+		</div>
+		<div class="modal-body">	
+			 <table class="table table-bordered table-striped"   width="800px">			
+      	  		
+      	  		  <tr>
+					<td>选择楼栋</td>
+                    <td>
+	                     <select class="form-control select-sm"  id="myselectTypeStatus"
+	                     ng-model="entity.buildingid"  
+	                     ng-options="item.id as item.name for item in buildingList" >															
+			             </select>
+                    </td> 
+                 </tr>	
+      	  		
+      	  		
+      	  		 <tr>
+					<td>选择房间</td>
+                    <td>
+	                     <select class="form-control select-sm"  id="myselectTypeStatus"
+	                     ng-model="entity.houseid"  
+	                     ng-options="item.houseid as item.name for item in houseList" >															
+			             </select>
+                    </td> 
+                 </tr>	
+                 
+                  <tr>
+					<td>编号</td>
+                    <td><input  class="form-control"  readonly="readonly"
+                    ng-model="entity.singlewater" 
+                    placeholder="分期编号由后台生成" ></td> 
+                 </tr>	
+                 
+                 <tr>
+					<td>水初</td>
+                    <td><input  class="form-control" 
+                    ng-model="entity.waterstart" 
+                    placeholder="请输入租约时间内初始水的数字" ></td> 
+                 </tr>	
+                 
+                 
+                 <tr>
+					<td>水末</td>
+                    <td><input  class="form-control" 
+                    ng-model="entity.waterend" 
+                    placeholder="请输入租约时间内截止水的数字" ></td> 
+                 </tr>	
+                 
+                 <tr>
+					<td>电初</td>
+                    <td><input  class="form-control" 
+                    ng-model="entity.lightstart" 
+                    placeholder="请输入租约时间内初始电的数字" ></td> 
+                 </tr>	
+                 
+                 
+                 <tr>
+					<td>电末</td>
+                    <td><input  class="form-control" 
+                    ng-model="entity.lightend" 
+                    placeholder="请输入租约时间内截止电的数字" ></td> 
+                 </tr>
+                 
+                 <tr>
+					<td>租约开始</td>
+                    <td><input  class="form-control" 
+                     placeholder="输入正确格式：2007-05-01" 
+                    ng-model="entity.start_time" 
+                    ></td> 
+                 </tr>
+                 
+                  <tr>
+					<td>租约结束</td>
+                    <td><input  class="form-control" 
+                    placeholder="输入正确格式：2007-05-01" 
+                    ng-model="entity.end_time" 
+                   ></td> 
+                 </tr>		
+                 
+                 
+                 
+                 <tr>
+					<td>实收</td>
+                    <td><input  class="form-control" 
+                    ng-model="entity.realmonery" 
+                    placeholder="本期租约实际收入的金额" ></td> 
+                 </tr>		
+                 								
+			 </table>				
+		</div>
+		<div class="modal-footer">						
+			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="save()">保存</button>
+			<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+		</div>
+	  </div>
+	</div>
+</div>
+   
+</body>
+</html>

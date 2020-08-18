@@ -4,6 +4,19 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="WebApp_ID" version="3.0">
 	
+	
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.jpg</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.js</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.css</url-pattern>
+	</servlet-mapping>
 	<filter>
 		<filter-name>characterEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -46,7 +59,7 @@
 		</init-param>
 		<init-param>
 			<param-name>cors.supportedHeaders</param-name>
-			<param-value>Accept, Origin, X-Requested-With, Content-Type, Last-Modified,Authorization</param-value>
+			<param-value>Accept, Origin, X-Requested-With, Content-Type, Last-Modified,Authorization ,acctoken</param-value>
 		</init-param>
 		<init-param>
 			<param-name>cors.exposedHeaders</param-name>

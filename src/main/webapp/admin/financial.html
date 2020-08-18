@@ -102,7 +102,7 @@
                  <tr>
 					<td>业务类型</td>
                     <td>
-	                     <select class="form-control select-sm"  id="myselectTypeStatus"
+	                     <select class="form-control select-sm"  
 	                     ng-model="entity.fatherid"  
 	                     ng-options="item.id as item.text for item in seletModeltypestatus" >															
 			             </select>
@@ -112,14 +112,14 @@
 					<td>状态</td>
                     <td>
 	                     <select class="form-control select-sm"  
-	                     ng-model="entity.type"  value="正常"
+	                     ng-model="entity.type" 
 	                     ng-options="item.id as item.text for item in seletModelstatus" >															
 			             </select>
                     </td> 
                  </tr>						
 			 </table>				
 		</div>
-		<div class="modal-footer">						
+		<div class="modal-footer" ng-if="entity.financialid != 4 && entity.financialid != 5 ">						
 			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="save()">保存</button>
 			<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
 		</div>

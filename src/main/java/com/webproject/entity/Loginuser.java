@@ -21,7 +21,7 @@ public class Loginuser {
     /** 最后一次登录时间*/
     private Date lastgoin;
 
-    /** 用户状态*/
+    /** 0-正常 1-占用*/
     private Integer state;
 
     /** */
@@ -30,27 +30,10 @@ public class Loginuser {
     /** 用户类型 0-超级用户 1-管理员 2-普通用户*/
     private Integer type;
 
-    private String newword;
-    
-    private String fromDate;
-    
-    public String getFromDate() {
-		return fromDate;
-	}
+    /** 安全校验码*/
+    private String acctoken;
 
-	public void setFromDate(String fromDate) {
-		this.fromDate = fromDate;
-	}
-
-	public String getNewword() {
-		return newword;
-	}
-
-	public void setNewword(String newword) {
-		this.newword = newword;
-	}
-
-	public String getUserid() {
+    public String getUserid() {
         return userid;
     }
 
@@ -120,5 +103,13 @@ public class Loginuser {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public String getAcctoken() {
+        return acctoken;
+    }
+
+    public void setAcctoken(String acctoken) {
+        this.acctoken = acctoken == null ? null : acctoken.trim();
     }
 }

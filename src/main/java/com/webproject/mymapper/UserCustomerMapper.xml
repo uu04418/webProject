@@ -2,24 +2,63 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.webproject.mymapper.UserCustomerMapper" >
   
+	  
+	  
+	  <select id="getNextUserId" resultType="string">
+	   	SELECT IFNULL(MAX(loginuser.userid+1),10000000)   FROM loginuser
+	  </select>
+	 
+	 
+	  <select id="getNextBuildingId" resultType="string">
+	  	SELECT IFNULL(MAX(id+1),10000000)   FROM building
+	  </select>
+	  
+	   <select id="getNextPayexpertid" resultType="string">
+	  	   SELECT IFNULL(MAX(payexpertid+1),10000000)   FROM payexpert
+	  </select>
+	  
+	   <select id="getNextFinandetailid" resultType="string">
+	  	   SELECT IFNULL(MAX(finandetailid+1),10000000)   FROM finandetail
+	  </select>
+	  
+	   <select id="getNextFinancialid" resultType="string">
+	   	SELECT IFNULL(MAX(financialid+1),10000000)   FROM financial
+	  </select>
+	  
+	   <select id="getNextHouseId" resultType="string">
+	   		SELECT IFNULL(MAX(houseid+1),10000000)   FROM house
+	  </select>
+	  
+	  
+	  
+	  
+	  
 	  <select id="searchUserByUserNameOrTelephone" resultType="com.webproject.entity.Loginuser">
 	  		SELECT * from loginuser where username = #{username} or telephone = #{username}
-	  </select>
-	   <select id="getNextUserId" resultType="string">
-	   SELECT MAX(userid) + 1 from loginuser
 	  </select>
 	  
 	  
 	  <select id="SearchFinandetail" resultType="com.webproject.myentity.FinandetailCustomer">
 	  		SELECT
-				*
+				finandetail.* ,
+				house.`name` housename ,
+				payexpert.payexpertname ,
+				financial.categoryname ,
+        		financial.type  ,
+				building.`name` buildingname
 			FROM
 				finandetail
 			LEFT JOIN financial ON finandetail.financialid = financial.financialid
+			LEFT JOIN payexpert on finandetail.payexpertid = payexpert.payexpertid
+			LEFT JOIN house on house.houseid = payexpert.houseid
+			LEFT JOIN building on house.buildingid = building.id
 			where 1=1
 			<if test="search !=null">
-				<if test="search.userid !=null">
-					AND finandetail.userid = #{search.userid}
+				<if test="search.buildingid !=null and search.buildingid !='' ">
+					AND building.id = #{search.buildingid }
+				</if>
+				<if test="search.houseid !=null and search.houseid !='' ">
+					AND house.houseid = #{search.houseid }
 				</if>
 			</if>
 			
@@ -31,17 +70,24 @@
 	  
 	  
 	   <select id="SearchFinandetailCount" resultType="integer">
-	  		SELECT
-				COUNT(1)
+	   				SELECT
+				 count(1)
 			FROM
 				finandetail
 			LEFT JOIN financial ON finandetail.financialid = financial.financialid
-			where 1=1
+			LEFT JOIN payexpert on finandetail.payexpertid = payexpert.payexpertid
+			LEFT JOIN house on house.houseid = payexpert.houseid
+			LEFT JOIN building on house.buildingid = building.id
+	   		where 1=1
 			<if test="search !=null">
-				<if test="search.userid !=null">
-					AND finandetail.userid = #{search.userid}
+				<if test="search.buildingid !=null and search.buildingid !='' ">
+					AND building.id = #{search.buildingid }
+				</if>
+				<if test="search.houseid !=null and search.houseid !='' ">
+					AND house.houseid = #{search.houseid }
 				</if>
 			</if>
+	   
 	  </select>
 	  
 	  
@@ -91,9 +137,129 @@
   
   <select id="monthChartlistCount"  resultType="integer" >
 		  SELECT count(1) from montherchartpanel
-
 				where montherchartpanel.userid = #{userid}
-			
+  </select>
+  
+  <select id="buildinglistCount"  resultType="integer" >
+		 SELECT COUNT(1) from building 
+  </select>
+   <select id="buildinglist"  resultType="com.webproject.myentity.BuildingCustomer" >
+			select building.* , loginuser.telephone , loginuser.username from building 
+				LEFT JOIN loginuser on loginuser.userid = building.userid
+			<!-- 分页的查询条件 -->
+			<if test="pagequery !=null ">
+				limit #{pagequery.pagestart} , #{pagequery.pagesize}
+			</if>
+  </select>
+  
+  
+  
+  
+  
+  <select id="houselistCount"  resultType="integer" >
+		 SELECT  COUNT(1)  from house
+					LEFT JOIN building on house.buildingid = building.id
+			WHERE 1=1
+			<if test="search !=null">
+				<if test="search.buildingid !=null and search.buildingid !='' ">
+					AND building.id = #{search.buildingid}
+				</if>
+			</if>
+  </select>
+  <select id="houselist"  resultType="com.webproject.myentity.HouseCustomer" >
+			SELECT house.* , building.`name` building  from house
+					LEFT JOIN building on house.buildingid = building.id
+			WHERE 1=1
+			<if test="search !=null">
+				<if test="search.buildingid !=null and search.buildingid !='' ">
+					AND building.id = #{search.buildingid}
+				</if>
+			</if>
+			<!-- 分页的查询条件 -->
+			<if test="pagequery !=null ">
+				limit #{pagequery.pagestart} , #{pagequery.pagesize}
+			</if>
+  </select>
+  
+  
+  
+   <select id="userlistCount"  resultType="integer" >
+   		SELECT  COUNT(1)  from  loginuser
+   		WHERE 1=1 
+			<if test="search !=null ">
+				<if test="search.type !=null and search.type != ''">
+					AND loginuser.type = #{search.type}
+				</if>
+			</if>
+  </select>
+  <select id="userlist"  resultType="com.webproject.entity.Loginuser" >
+			SELECT * from  loginuser
+			WHERE 1=1 
+			<if test="search !=null ">
+				<if test="search.type !=null and search.type != ''">
+					AND loginuser.type = #{search.type}
+				</if>
+			</if>
+			<!-- 分页的查询条件 -->
+			<if test="pagequery !=null ">
+				limit #{pagequery.pagestart} , #{pagequery.pagesize}
+			</if>
+  </select>
+  
+  
+   <select id="findOneUser"  resultType="com.webproject.entity.Loginuser" >
+   	SELECT userid , type , username ,telephone  from loginuser where userid = #{id}
+  </select>
+  
+   <select id="searchHouseByBuildingId"  resultType="com.webproject.myentity.HouseCustomer" >
+   
+   	SELECT * from house where house.buildingid = #{id}
+   	
+   
+  </select>
+  
+  
+   <select id="getMonthPayexpert"  resultType="com.webproject.entity.Payexpert" >
+  	SELECT * FROM payexpert WHERE DATE_FORMAT( end_time, '%Y%m' ) = DATE_FORMAT( #{end_time}  , '%Y%m' )
+		and houseid = #{houseid}
+  </select>
+  
+   <select id="getLastPayNumber"  resultType="string" >
+  	SELECT IFNULL( MAX(payexpertname+1 ),1) from payexpert
+		where payexpert.houseid = #{houseid}
+  </select>
+  
+  
+   <select id="payexportlistCount"  resultType="integer" >
+   		SELECT COUNT(1) from payexpert
+   		WHERE 1=1 
+			<if test="search !=null ">
+				<if test="search.houseid !=null and search.houseid != ''">
+					AND payexpert.houseid = #{search.houseid}
+				</if>
+			</if>
+  </select>
+  
+   
+   <select id="payexportlist"  resultType="com.webproject.myentity.PayexpertCustomer" >
+   		SELECT payexpert.* ,house.`name` housename,building.`name` buildingname from payexpert
+			LEFT JOIN house on house.houseid = payexpert.houseid
+			LEFT JOIN building on house.buildingid = building.id
+			WHERE 1=1 
+			<if test="search !=null ">
+				<if test="search.houseid !=null and search.houseid != ''">
+					AND payexpert.houseid = #{search.houseid}
+				</if>
+			</if>
+				<!-- 分页的查询条件 -->
+			<if test="pagequery !=null ">
+				limit #{pagequery.pagestart} , #{pagequery.pagesize}
+			</if>
+  </select>
+  
+  
+   <select id="getUserByAcctoken"  resultType="com.webproject.entity.Loginuser" >
+   			SELECT * from loginuser where acctoken = #{acctoken}
   </select>
   
   

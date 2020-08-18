@@ -2,13 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.webproject.mapper.FinandetailMapper" >
   <resultMap id="BaseResultMap" type="com.webproject.entity.Finandetail" >
-    <id column="finandetailid" property="finandetailid" jdbcType="BIGINT" />
-    <result column="userid" property="userid" jdbcType="BIGINT" />
-    <result column="financialid" property="financialid" jdbcType="BIGINT" />
+    <id column="finandetailid" property="finandetailid" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="financialid" property="financialid" jdbcType="VARCHAR" />
     <result column="monery" property="monery" jdbcType="INTEGER" />
     <result column="descname" property="descname" jdbcType="VARCHAR" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="payexpertid" property="payexpertid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    finandetailid, userid, financialid, monery, descname, createtime, state
+    finandetailid, userid, financialid, monery, descname, createtime, state, payexpertid
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.webproject.entity.FinandetailExample" >
     select
@@ -85,15 +86,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from finandetail
-    where finandetailid = #{finandetailid,jdbcType=BIGINT}
+    where finandetailid = #{finandetailid,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from finandetail
-    where finandetailid = #{finandetailid,jdbcType=BIGINT}
+    where finandetailid = #{finandetailid,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.webproject.entity.FinandetailExample" >
     delete from finandetail
@@ -104,10 +105,10 @@
   <insert id="insert" parameterType="com.webproject.entity.Finandetail" >
     insert into finandetail (finandetailid, userid, financialid, 
       monery, descname, createtime, 
-      state)
-    values (#{finandetailid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{financialid,jdbcType=BIGINT}, 
+      state, payexpertid)
+    values (#{finandetailid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{financialid,jdbcType=VARCHAR}, 
       #{monery,jdbcType=INTEGER}, #{descname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{state,jdbcType=INTEGER})
+      #{state,jdbcType=INTEGER}, #{payexpertid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.webproject.entity.Finandetail" >
     insert into finandetail
@@ -133,16 +134,19 @@
       <if test="state != null" >
         state,
       </if>
+      <if test="payexpertid != null" >
+        payexpertid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="finandetailid != null" >
-        #{finandetailid,jdbcType=BIGINT},
+        #{finandetailid,jdbcType=VARCHAR},
       </if>
       <if test="userid != null" >
-        #{userid,jdbcType=BIGINT},
+        #{userid,jdbcType=VARCHAR},
       </if>
       <if test="financialid != null" >
-        #{financialid,jdbcType=BIGINT},
+        #{financialid,jdbcType=VARCHAR},
       </if>
       <if test="monery != null" >
         #{monery,jdbcType=INTEGER},
@@ -156,6 +160,9 @@
       <if test="state != null" >
         #{state,jdbcType=INTEGER},
       </if>
+      <if test="payexpertid != null" >
+        #{payexpertid,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.webproject.entity.FinandetailExample" resultType="java.lang.Integer" >
@@ -168,13 +175,13 @@
     update finandetail
     <set >
       <if test="record.finandetailid != null" >
-        finandetailid = #{record.finandetailid,jdbcType=BIGINT},
+        finandetailid = #{record.finandetailid,jdbcType=VARCHAR},
       </if>
       <if test="record.userid != null" >
-        userid = #{record.userid,jdbcType=BIGINT},
+        userid = #{record.userid,jdbcType=VARCHAR},
       </if>
       <if test="record.financialid != null" >
-        financialid = #{record.financialid,jdbcType=BIGINT},
+        financialid = #{record.financialid,jdbcType=VARCHAR},
       </if>
       <if test="record.monery != null" >
         monery = #{record.monery,jdbcType=INTEGER},
@@ -188,6 +195,9 @@
       <if test="record.state != null" >
         state = #{record.state,jdbcType=INTEGER},
       </if>
+      <if test="record.payexpertid != null" >
+        payexpertid = #{record.payexpertid,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -195,13 +205,14 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update finandetail
-    set finandetailid = #{record.finandetailid,jdbcType=BIGINT},
-      userid = #{record.userid,jdbcType=BIGINT},
-      financialid = #{record.financialid,jdbcType=BIGINT},
+    set finandetailid = #{record.finandetailid,jdbcType=VARCHAR},
+      userid = #{record.userid,jdbcType=VARCHAR},
+      financialid = #{record.financialid,jdbcType=VARCHAR},
       monery = #{record.monery,jdbcType=INTEGER},
       descname = #{record.descname,jdbcType=VARCHAR},
       createtime = #{record.createtime,jdbcType=TIMESTAMP},
-      state = #{record.state,jdbcType=INTEGER}
+      state = #{record.state,jdbcType=INTEGER},
+      payexpertid = #{record.payexpertid,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -210,10 +221,10 @@
     update finandetail
     <set >
       <if test="userid != null" >
-        userid = #{userid,jdbcType=BIGINT},
+        userid = #{userid,jdbcType=VARCHAR},
       </if>
       <if test="financialid != null" >
-        financialid = #{financialid,jdbcType=BIGINT},
+        financialid = #{financialid,jdbcType=VARCHAR},
       </if>
       <if test="monery != null" >
         monery = #{monery,jdbcType=INTEGER},
@@ -227,20 +238,21 @@
       <if test="state != null" >
         state = #{state,jdbcType=INTEGER},
       </if>
+      <if test="payexpertid != null" >
+        payexpertid = #{payexpertid,jdbcType=VARCHAR},
+      </if>
     </set>
-    where finandetailid = #{finandetailid,jdbcType=BIGINT}
+    where finandetailid = #{finandetailid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.webproject.entity.Finandetail" >
     update finandetail
-    set userid = #{userid,jdbcType=BIGINT},
-      financialid = #{financialid,jdbcType=BIGINT},
+    set userid = #{userid,jdbcType=VARCHAR},
+      financialid = #{financialid,jdbcType=VARCHAR},
       monery = #{monery,jdbcType=INTEGER},
       descname = #{descname,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=TIMESTAMP},
-      state = #{state,jdbcType=INTEGER}
-    where finandetailid = #{finandetailid,jdbcType=BIGINT}
+      state = #{state,jdbcType=INTEGER},
+      payexpertid = #{payexpertid,jdbcType=VARCHAR}
+    where finandetailid = #{finandetailid,jdbcType=VARCHAR}
   </update>
-  
-  
-   
 </mapper>

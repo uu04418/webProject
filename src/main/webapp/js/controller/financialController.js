@@ -2,9 +2,9 @@
 app.controller('financialController' ,function($scope,$controller ,financialService){	
 	
 	$scope.typestatus = ['未知','收入','支出'];
-	$scope.seletModeltypestatus  = [{id:'1',text:'收入'},{id:'2',text:'支出'}]
+	$scope.seletModeltypestatus  = [{id:1,text:'收入'},{id:2,text:'支出'}]
 	$scope.status = ['未知','正常','禁用'];
-	$scope.seletModelstatus = [{id:'1',text:'正常'} ,{id:'2',text:'禁用'}];
+	$scope.seletModelstatus = [{id:1,text:'正常'} ,{id:2,text:'禁用'}];
 	$controller('baseController',{$scope:$scope});//继承
 	$scope.searchEntity={};//定义搜索对象 
 	

@@ -9,24 +9,21 @@ app.controller('indexController' ,function($scope,$controller ,monthService, log
     
 	//读取用户信息渲染页面
 	$scope.getUserMessage=function(){
-		var userid = localStorage.getItem('userid');
-		if (userid ==null) {
-			window.location.href='login.html';
-		} else {
 			loginService.getUserMessage(userid).success(
 			function(response){
 				if (response.success) {
 					$scope.loginUser = response.data;
 				}else {
-					alert(response.message);
-					localStorage.clear();
-					window.location.href='login.html';
 				}
 				
 			}			
 		);
-		}
 	}   
+	
+	$scope.getLoginMess = function (){
+		 var loginUser = $scope.sessionUser();
+		 $scope.loginUser = loginUser 
+	}
 	
 	$scope.uploadFile =function () {
 		loginService.uploadFile().success(
@@ -62,6 +59,8 @@ app.controller('indexController' ,function($scope,$controller ,monthService, log
 		loginService.login($scope.entity).success(
 			function(response){
 				localStorage.setItem('userid', $scope.loginUser.userid);
+				var requestUrl = 'http://localhost:8040/webProject';
+				localStorage.setItem('requestUrl', requestUrl);
 				$scope.loginUser=response.loginUser;
 			}			
 		);
@@ -104,8 +103,10 @@ app.controller('indexController' ,function($scope,$controller ,monthService, log
 		loginService.userlogin($scope.loginUser).success(
 				function (response) {
 					if (response.code == 200) {
-						localStorage.setItem('userid',response.obj);
-						window.location.href='https://www.zzw777.com/webProject/admin/index.html';
+						localStorage.setItem('loginUser', JSON.stringify( response.obj));
+						var requestUrl = 'http://localhost:8040/webProject';
+						localStorage.setItem('requestUrl', requestUrl);
+						window.location.href='index.html';
 					}else {
 						alert(response.msg);
 					}

@@ -41,14 +41,6 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public Result updateUser(Loginuser user) {
 		Loginuser searchUser = loginuserMapper.selectByPrimaryKey(user.getUserid());
-		if (CheckDataUtil.checkNotEmpty(user.getPassword())
-				&& CheckDataUtil.checkNotEmpty(user.getNewword())) {
-			if (CheckDataUtil.checkNotEqual(searchUser.getPassword(), user.getPassword())) {
-				return new Result(false, "原始密码错误");
-			}
-			String newWord = IDUtils.getprivatePassword(user.getNewword());
-			user.setPassword(newWord);
-		}
 	
 		if (CheckDataUtil.checkisEmpty(user.getTelephone())
 				|| CheckDataUtil.checkisEmpty(user.getUsername())) {
@@ -91,8 +83,6 @@ public class LoginServiceImpl implements LoginService {
 		user.setUsername(username);
 		user.setUserid(userid);
 	    loginuserMapper.insertSelective(user);
-		String fromDate = DateUtil.DateToStr("yyyy-MM-dd HH:mm", new Date()) ;
-		user.setFromDate(fromDate);
 		request.getSession().setAttribute("loginUser", user);
 		return ResultMap.build(200, "注册成功,即将前往首页");
 	}
@@ -102,14 +92,12 @@ public class LoginServiceImpl implements LoginService {
 		return loginuserMapper.selectByExample(null);
 	}
 	@Override
-	public Result getUserMessage(Long userid) {
+	public Result getUserMessage(String userid) {
 		if (CheckDataUtil.checkisEmpty(userid)) {
 			return new Result(false, "登录超时");
 		}
-		
-		Loginuser user = loginuserMapper.selectByPrimaryKey(userid+"");
+		Loginuser user = loginuserMapper.selectByPrimaryKey(userid);
 		String fromDate = DateUtil.DateToStr("yyyy-MM-dd HH:mm", user.getLastgoin()) ;
-		user.setFromDate(fromDate);
 		if (CheckDataUtil.checkisEmpty(user)) {
 			return new Result(false, "登录超时");
 		}

@@ -8,12 +8,6 @@ app.controller('chartPanelController' ,function($scope,$controller ,chartPanelSe
 	
 	//搜索
 	$scope.search=function(page,rows){	
-		var userid = localStorage.getItem('userid');
-		if (userid ==null) {
-			window.location.href='login.html';
-			return ;
-		} 
-		$scope.searchEntity.userid = userid;
 		chartPanelService.search(page,rows,$scope.searchEntity).success(
 			function(response){
 				$scope.list=response.rows;	

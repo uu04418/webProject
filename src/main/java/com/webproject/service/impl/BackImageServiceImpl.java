@@ -20,9 +20,8 @@ public class BackImageServiceImpl implements BackImageService {
 	}
 
 	@Override
-	public String findImageName(Long id) {
-		// TODO Auto-generated method stub
-		return backimageurlMapper.selectByPrimaryKey(id).getIamgename();
+	public String findImageName(String id) {
+		return backimageurlMapper.selectByPrimaryKey(Long.valueOf(id)).getIamgename();
 	}
 
 }

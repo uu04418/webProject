@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.webproject.entity.Loginuser;
 import com.webproject.service.LoginService;
 import com.webproject.util.CheckDataUtil;
-import com.webproject.util.DateUtil;
 import com.webproject.util.IDUtils;
 import com.webproject.util.Result;
 import com.webproject.util.ResultMap;
@@ -85,7 +84,7 @@ public class LoginController {
 			if (CheckDataUtil.checkNotEqual(loginuser.getPassword(), password)) {
 				return ResultMap.build(400, "登录失败,密码错误");
 			}
-			return ResultMap.build(200, "登录成功" , loginuser.getUserid());
+			return ResultMap.build(200, "登录成功" , loginuser);
 		} else {
 			return ResultMap.build(400, "登录失败,密码错误");
 		}
@@ -114,7 +113,7 @@ public class LoginController {
 	
 	@ResponseBody
 	@RequestMapping("/login/getUserMessage")
-	public Result getUserMessage (Long userid) {
+	public Result getUserMessage (String userid) {
 		return loginService.getUserMessage(userid);
 	};
 }

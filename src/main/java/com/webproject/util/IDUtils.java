@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
+
 import javax.net.ssl.SSLContext;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.http.HttpEntity;
@@ -72,6 +74,11 @@ public class IDUtils {
 			return Integer.parseInt(prease);
 		}
 		return 0;
+	}
+	
+	public static String geneAcctoken(){
+		String securitytoken = UUID.randomUUID().toString();
+		return securitytoken ;
 	}
 
 	public static String datecompany(Date end, Date start) {
@@ -478,6 +485,22 @@ public class IDUtils {
 		String str = millis + String.format("%02d", end2);
 		String id = new String(str);
 		return id + ".png";
+	}
+
+	public static String formatLastNumber(String lastNumber) {
+		if (lastNumber.length() >= 6) 
+			return lastNumber;
+		if (lastNumber.length() == 5) 
+			return "0" + lastNumber;
+		if (lastNumber.length() == 4) 
+			return "00" + lastNumber;
+		if (lastNumber.length() == 3) 
+			return "000" + lastNumber;
+		if (lastNumber.length() == 2) 
+			return "0000" + lastNumber;
+		if (lastNumber.length() == 1) 
+			return "00000" + lastNumber;
+		return null;
 	}
 
 }

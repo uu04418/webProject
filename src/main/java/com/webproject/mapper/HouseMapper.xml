@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.webproject.mapper.HouseMapper" >
+  <resultMap id="BaseResultMap" type="com.webproject.entity.House" >
+    <id column="houseid" property="houseid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="singlewater" property="singlewater" jdbcType="DOUBLE" />
+    <result column="singlelight" property="singlelight" jdbcType="DOUBLE" />
+    <result column="buildingid" property="buildingid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    houseid, name, singlewater, singlelight, buildingid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.webproject.entity.HouseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from house
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from house
+    where houseid = #{houseid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from house
+    where houseid = #{houseid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.webproject.entity.HouseExample" >
+    delete from house
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.webproject.entity.House" >
+    insert into house (houseid, name, singlewater, 
+      singlelight, buildingid)
+    values (#{houseid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{singlewater,jdbcType=DOUBLE}, 
+      #{singlelight,jdbcType=DOUBLE}, #{buildingid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.webproject.entity.House" >
+    insert into house
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="houseid != null" >
+        houseid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="singlewater != null" >
+        singlewater,
+      </if>
+      <if test="singlelight != null" >
+        singlelight,
+      </if>
+      <if test="buildingid != null" >
+        buildingid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="houseid != null" >
+        #{houseid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="singlewater != null" >
+        #{singlewater,jdbcType=DOUBLE},
+      </if>
+      <if test="singlelight != null" >
+        #{singlelight,jdbcType=DOUBLE},
+      </if>
+      <if test="buildingid != null" >
+        #{buildingid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.webproject.entity.HouseExample" resultType="java.lang.Integer" >
+    select count(*) from house
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update house
+    <set >
+      <if test="record.houseid != null" >
+        houseid = #{record.houseid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.singlewater != null" >
+        singlewater = #{record.singlewater,jdbcType=DOUBLE},
+      </if>
+      <if test="record.singlelight != null" >
+        singlelight = #{record.singlelight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.buildingid != null" >
+        buildingid = #{record.buildingid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update house
+    set houseid = #{record.houseid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      singlewater = #{record.singlewater,jdbcType=DOUBLE},
+      singlelight = #{record.singlelight,jdbcType=DOUBLE},
+      buildingid = #{record.buildingid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.webproject.entity.House" >
+    update house
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="singlewater != null" >
+        singlewater = #{singlewater,jdbcType=DOUBLE},
+      </if>
+      <if test="singlelight != null" >
+        singlelight = #{singlelight,jdbcType=DOUBLE},
+      </if>
+      <if test="buildingid != null" >
+        buildingid = #{buildingid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where houseid = #{houseid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.webproject.entity.House" >
+    update house
+    set name = #{name,jdbcType=VARCHAR},
+      singlewater = #{singlewater,jdbcType=DOUBLE},
+      singlelight = #{singlelight,jdbcType=DOUBLE},
+      buildingid = #{buildingid,jdbcType=VARCHAR}
+    where houseid = #{houseid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -15,7 +15,7 @@ public interface FinancialService {
 
 	public Result add(Financial financial);
 
-	public Financial findOne(Long id);
+	public Financial findOne(String id);
 
 	public Result update(Financial financial);
 
@@ -25,11 +25,11 @@ public interface FinancialService {
 
 	public Result update(Finandetail financial);
 
-	Finandetail  oneDetail(Long finandetailid);
+	Finandetail  oneDetail(String finandetailid);
 
-	public Result updateDetailDelete(Long[] ids);
+	public Result updateDetailDelete(String[] ids);
 
-	public Result deleteDetail(Long id);
+	public Result deleteDetail(String id);
 	
 
 	public List<FinandetailCustomer>  searchCharByNeay(Long userid, String dateString);

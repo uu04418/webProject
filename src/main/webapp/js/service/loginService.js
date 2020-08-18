@@ -1,8 +1,8 @@
 //服务层
 app.service('loginService',function($http){
 	
-	//var AppUrl = 'http://localhost:8040/webProject';
-	var AppUrl = 'https://www.zzw777.com/webProject';
+	var AppUrl = 'http://localhost:8040/webProject';
+	//var AppUrl = 'https://www.zzw777.com/webProject';
 	//显示登录用户名称
 	this.getUserMessage=function(userid){
 		return $http.get( AppUrl +  '/login/getUserMessage?userid='+userid);		

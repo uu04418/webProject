@@ -21,7 +21,51 @@ app.controller('baseController' ,function($scope){
 	}; 
 	
 	$scope.selectIds=[];//选中的ID集合 
-
+	
+	$scope.formateDate = function (value) {
+		value =  new Date(value);
+		var year = value.getFullYear()
+		var month = value.getMonth() + 1
+		var day = value.getDate()
+		var hour = value.getHours()
+		var minute = value.getMinutes()
+		var seconds = value.getSeconds()
+		if(month < 10)  month = '0' + month;
+		if(day < 10)    day = '0' + day;
+		if(hour < 10)   hour = '0' + hour;
+		if(minute < 10) minute = '0' +minute;
+		if(seconds < 10) seconds = '0' + seconds;
+		var t = year + '-' + month + '-' + day 
+		return t;
+	}
+	
+	$scope.sessionUser = function (){
+		var loginUser = localStorage.getItem('loginUser');
+		if (!loginUser) {
+			return null;
+		} else {
+			return JSON.parse(loginUser)
+		}
+		
+	}
+	
+	$scope.formatedate = function (value) {
+		value =  new Date(value);
+		var year = value.getFullYear()
+		var month = value.getMonth() + 1
+		var day = value.getDate()
+		var hour = value.getHours()
+		var minute = value.getMinutes()
+		var seconds = value.getSeconds()
+		if(month < 10)  month = '0' + month;
+		if(day < 10)    day = '0' + day;
+		if(hour < 10)   hour = '0' + hour;
+		if(minute < 10) minute = '0' +minute;
+		if(seconds < 10) seconds = '0' + seconds;
+		var t = year + '-' + month + '-' + day  +' ' + hour +  ':' + minute
+		return t;
+	}
+	
 	//更新复选
 	$scope.updateSelection = function($event, id) {		
 		if($event.target.checked){//如果是被选中,则增加到数组
